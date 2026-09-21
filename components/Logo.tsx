@@ -1,44 +1,64 @@
+import { brandColors, markViewBox, pathB, pathV } from "@/lib/logo";
+
+type LogoMarkProps = {
+  inverted?: boolean;
+  size?: number;
+  className?: string;
+  title?: string;
+};
+
+export function LogoMark({
+  inverted = false,
+  size = 36,
+  className = "",
+  title,
+}: LogoMarkProps) {
+  const b = inverted ? brandColors.white : brandColors.navy;
+  const v = brandColors.gold;
+
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox={markViewBox}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      aria-hidden={title ? undefined : true}
+      role={title ? "img" : undefined}
+    >
+      {title ? <title>{title}</title> : null}
+      <path fill={b} fillRule="evenodd" d={pathB} />
+      <path fill={v} d={pathV} />
+    </svg>
+  );
+}
+
 type LogoProps = {
   inverted?: boolean;
   className?: string;
+  markSize?: number;
+  withWordmark?: boolean;
 };
 
-export function Logo({ inverted = false, className = "" }: LogoProps) {
+export function Logo({
+  inverted = false,
+  className = "",
+  markSize = 38,
+  withWordmark = true,
+}: LogoProps) {
   return (
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
-      <svg
-        width="36"
-        height="36"
-        viewBox="0 0 36 36"
-        fill="none"
-        aria-hidden="true"
-        className="shrink-0"
-      >
-        <rect
-          width="36"
-          height="36"
-          rx="8"
-          className={inverted ? "fill-white/10" : "fill-navy-900"}
-        />
-        <path
-          d="M8 23.5C12.2 17.8 16.5 14.5 18 14.5C19.5 14.5 23.8 17.8 28 23.5"
-          className="stroke-gold-400"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-        />
-        <path
-          d="M11 20.2C13.8 16.6 16.4 14.8 18 14.8C19.6 14.8 22.2 16.6 25 20.2"
-          className={inverted ? "stroke-white/70" : "stroke-white/70"}
-          strokeWidth="1.4"
-          strokeLinecap="round"
-        />
-        <circle cx="18" cy="14.2" r="2.1" className="fill-gold-400" />
-      </svg>
-      <span
-        className={`text-[1.05rem] font-semibold tracking-tight ${inverted ? "text-white" : "text-navy-900"}`}
-      >
-        Broker <span className="text-gold-400">Vision</span>
-      </span>
+      <LogoMark inverted={inverted} size={markSize} />
+      {withWordmark ? (
+        <span
+          className={`text-[1.05rem] font-semibold tracking-tight ${
+            inverted ? "text-white" : "text-navy-900"
+          }`}
+        >
+          Broker <span className="text-gold-400">Vision</span>
+        </span>
+      ) : null}
     </span>
   );
 }

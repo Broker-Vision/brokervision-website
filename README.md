@@ -10,6 +10,20 @@ Vorläufige Firmenwebseite der **Broker Vision GmbH**, Aarau.
 - Kontakt `/kontakt`
 - Impressum `/impressum`
 - Datenschutz `/datenschutz`
+- Marke `/marke`
+
+## Logo
+
+SVG-Monogramm (BV-Ligatur) in Dunkelblau `#0B1F3A` und Gold `#C9A45C`.
+
+Dateien unter `public/brand/`:
+
+- `logo-mark.svg` – nur Symbol
+- `logo-mark-on-light.svg` / `logo-mark-on-dark.svg`
+- `logo-wordmark.svg` – Symbol + Broker Vision
+- `logo-wordmark-on-light.svg` / `logo-wordmark-on-dark.svg`
+- `favicon-32.svg`
+- `app-icon.svg`
 
 ## Technik
 

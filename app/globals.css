@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --navy-950: #06101f;
-  --navy-900: #0a1b36;
-  --navy-800: #102848;
-  --navy-700: #17345c;
-  --gold-400: #c9a66b;
-  --gold-300: #d8bc8a;
+  --navy-950: #0b1f3a;
+  --navy-900: #0b1f3a;
+  --navy-800: #163154;
+  --navy-700: #1d3f68;
+  --gold-400: #c9a45c;
+  --gold-300: #d4b574;
   --cream: #f6f4ef;
-  --paper: #fbfaf7;
+  --paper: #f7f5f0;
 }
 
 @theme inline {
