@@ -25,7 +25,6 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   icons: {
     icon: "/favicon.svg",
-    apple: "/brand/app-icon.svg",
   },
   openGraph: {
     title: site.name,
