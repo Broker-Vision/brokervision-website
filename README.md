@@ -8,22 +8,21 @@ Vorläufige Firmenwebseite der **Broker Vision GmbH**, Aarau.
 - Über uns `/ueber-uns`
 - Lösungen `/loesungen`
 - Kontakt `/kontakt`
+- Marke `/marke` – fünf Logo-Konzepte zur Auswahl
 - Impressum `/impressum`
 - Datenschutz `/datenschutz`
-- Marke `/marke`
 
-## Logo
+## Logo-Konzepte
 
-SVG-Monogramm (BV-Ligatur) in Dunkelblau `#0B1F3A` und Gold `#C9A45C`.
+Die BV-Monogramme sind verworfen. Unter `public/brand/concepts/` liegen fünf eigenständige Symbole (ohne Buchstaben):
 
-Dateien unter `public/brand/`:
+1. Blickfeld – Vision / Orientierung
+2. Konnex – Vernetzung
+3. Versatz – Transformation
+4. Register – Präzision
+5. Synthese – Intelligentes System
 
-- `logo-mark.svg` – nur Symbol
-- `logo-mark-on-light.svg` / `logo-mark-on-dark.svg`
-- `logo-wordmark.svg` – Symbol + Broker Vision
-- `logo-wordmark-on-light.svg` / `logo-wordmark-on-dark.svg`
-- `favicon-32.svg`
-- `app-icon.svg`
+Farben: Dunkelblau `#0B1F3A`, Gold `#C9A45C`.
 
 ## Technik
 
