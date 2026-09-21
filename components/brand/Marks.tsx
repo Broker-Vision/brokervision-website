@@ -1,12 +1,11 @@
 import type { ReactNode } from "react";
-import { markColors } from "@/lib/logo";
+import { chevronPath, markColors } from "@/lib/logo";
 
 type MarkProps = {
   inverted?: boolean;
   size?: number;
   title?: string;
   className?: string;
-  instanceId?: string;
 };
 
 function canvas({
@@ -37,8 +36,19 @@ function canvas({
   );
 }
 
-/** Vision: origin + three rays + horizon arc. */
-export function MarkBlickfeld({ inverted = false, size = 160, title, className }: MarkProps) {
+/** 01 Steep solid roof peak. */
+export function MarkFirst({ inverted = false, size = 160, title, className }: MarkProps) {
+  const { primary } = markColors(inverted);
+  return canvas({
+    size,
+    title,
+    className,
+    children: <path fill={primary} d={chevronPath(40, 14, 68, 32, 14)} />,
+  });
+}
+
+/** 02 Open gable with gold ridge. */
+export function MarkGiebel({ inverted = false, size = 160, title, className }: MarkProps) {
   const { primary, gold } = markColors(inverted);
   return canvas({
     size,
@@ -47,25 +57,19 @@ export function MarkBlickfeld({ inverted = false, size = 160, title, className }
     children: (
       <>
         <path
-          d="M29.05 37.43 L63.35 24.95 M29.5 40 L66 40 M29.05 42.57 L63.35 55.05"
+          d="M14 66 L40 18 M66 66 L40 18"
           stroke={primary}
-          strokeWidth="4"
+          strokeWidth="8"
           strokeLinecap="butt"
         />
-        <path
-          d="M63.35 24.95 A44 44 0 0 1 63.35 55.05"
-          stroke={primary}
-          strokeWidth="4"
-          strokeLinecap="butt"
-        />
-        <circle cx="22" cy="40" r="5.5" fill={gold} />
+        <circle cx="40" cy="18" r="6" fill={gold} />
       </>
     ),
   });
 }
 
-/** Network: three poles, gold hub. */
-export function MarkKonnex({ inverted = false, size = 160, title, className }: MarkProps) {
+/** 03 Canopy over three orchestrated poles. */
+export function MarkKanzel({ inverted = false, size = 160, title, className }: MarkProps) {
   const { primary, gold } = markColors(inverted);
   return canvas({
     size,
@@ -73,23 +77,17 @@ export function MarkKonnex({ inverted = false, size = 160, title, className }: M
     className,
     children: (
       <>
-        <path
-          d="M40 40 L40 16 M40 40 L19.22 52 M40 40 L60.78 52"
-          stroke={primary}
-          strokeWidth="3.5"
-          strokeLinecap="butt"
-        />
-        <circle cx="40" cy="16" r="5.2" fill={primary} />
-        <circle cx="19.22" cy="52" r="5.2" fill={primary} />
-        <circle cx="60.78" cy="52" r="5.2" fill={primary} />
-        <circle cx="40" cy="40" r="6" fill={gold} />
+        <path fill={primary} d={chevronPath(40, 14, 36, 38, 9)} />
+        <circle cx="22" cy="62" r="5" fill={primary} />
+        <circle cx="40" cy="62" r="5" fill={gold} />
+        <circle cx="58" cy="62" r="5" fill={primary} />
       </>
     ),
   });
 }
 
-/** Transformation: two offset squares. */
-export function MarkVersatz({ inverted = false, size = 160, title, className }: MarkProps) {
+/** 04 Nested double roof. */
+export function MarkSchicht({ inverted = false, size = 160, title, className }: MarkProps) {
   const { primary, gold } = markColors(inverted);
   return canvas({
     size,
@@ -97,23 +95,15 @@ export function MarkVersatz({ inverted = false, size = 160, title, className }: 
     className,
     children: (
       <>
-        <rect x="14" y="14" width="36" height="36" fill={primary} />
-        <rect
-          x="30"
-          y="30"
-          width="36"
-          height="36"
-          fill="none"
-          stroke={gold}
-          strokeWidth="4"
-        />
+        <path fill={primary} d={chevronPath(40, 12, 68, 34, 11)} />
+        <path fill={gold} d={chevronPath(40, 36, 64, 18, 6)} />
       </>
     ),
   });
 }
 
-/** Precision: registration corners + gold center. */
-export function MarkRegister({ inverted = false, size = 160, title, className }: MarkProps) {
+/** 05 Wide shallow boomerang / canopy. */
+export function MarkBumerang({ inverted = false, size = 160, title, className }: MarkProps) {
   const { primary, gold } = markColors(inverted);
   return canvas({
     size,
@@ -121,60 +111,17 @@ export function MarkRegister({ inverted = false, size = 160, title, className }:
     className,
     children: (
       <>
-        <path
-          d="M18 30 V16 H32 M48 16 H62 V30 M18 50 V64 H32 M48 64 H62 V50"
-          stroke={primary}
-          strokeWidth="4"
-          strokeLinecap="square"
-          strokeLinejoin="miter"
-        />
-        <circle cx="40" cy="40" r="5" fill={gold} />
-      </>
-    ),
-  });
-}
-
-/** System: square ∩ circle, gold intersection. */
-export function MarkSynthese({
-  inverted = false,
-  size = 160,
-  title,
-  className,
-  instanceId = "synthese",
-}: MarkProps) {
-  const { primary, gold } = markColors(inverted);
-  const clip = `${instanceId}-clip`;
-  return canvas({
-    size,
-    title,
-    className,
-    children: (
-      <>
-        <defs>
-          <clipPath id={clip}>
-            <rect x="12" y="19" width="42" height="42" />
-          </clipPath>
-        </defs>
-        <circle cx="50" cy="40" r="21" fill={gold} clipPath={`url(#${clip})`} />
-        <rect
-          x="12"
-          y="19"
-          width="42"
-          height="42"
-          fill="none"
-          stroke={primary}
-          strokeWidth="4"
-        />
-        <circle cx="50" cy="40" r="21" fill="none" stroke={primary} strokeWidth="4" />
+        <path fill={primary} d={chevronPath(40, 24, 58, 36, 13)} />
+        <path fill={gold} d={chevronPath(40, 32, 58, 28, 8)} />
       </>
     ),
   });
 }
 
 export const markComponents = {
-  blickfeld: MarkBlickfeld,
-  konnex: MarkKonnex,
-  versatz: MarkVersatz,
-  register: MarkRegister,
-  synthese: MarkSynthese,
+  first: MarkFirst,
+  giebel: MarkGiebel,
+  kanzel: MarkKanzel,
+  schicht: MarkSchicht,
+  bumerang: MarkBumerang,
 } as const;

@@ -14,13 +14,13 @@ Vorläufige Firmenwebseite der **Broker Vision GmbH**, Aarau.
 
 ## Logo-Konzepte
 
-Die BV-Monogramme sind verworfen. Unter `public/brand/concepts/` liegen fünf eigenständige Symbole (ohne Buchstaben):
+Unter `public/brand/concepts/` liegen fünf Dachdreieck-Varianten (keine Häuser, keine Buchstaben):
 
-1. Blickfeld – Vision / Orientierung
-2. Konnex – Vernetzung
-3. Versatz – Transformation
-4. Register – Präzision
-5. Synthese – Intelligentes System
+1. First – Leitform
+2. Giebel – Orientierung
+3. Kanzel – alles unter einem Dach
+4. Schicht – Struktur
+5. Bumerang – Schutzdach
 
 Farben: Dunkelblau `#0B1F3A`, Gold `#C9A45C`.
 

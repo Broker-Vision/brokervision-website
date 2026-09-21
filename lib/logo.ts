@@ -5,8 +5,6 @@ export const brandColors = {
   paper: "#F7F5F0",
 } as const;
 
-export type MarkTone = "light" | "dark";
-
 export function markColors(inverted: boolean) {
   return {
     primary: inverted ? brandColors.white : brandColors.navy,
@@ -14,45 +12,66 @@ export function markColors(inverted: boolean) {
   };
 }
 
+/** Filled chevron / roof peak. Thickness `t` is the horizontal foot width. */
+export function chevronPath(
+  cx: number,
+  top: number,
+  bottom: number,
+  half: number,
+  t: number,
+): string {
+  const innerTop = top + (t / half) * (bottom - top);
+  const innerHalf = half - t;
+  return [
+    `M${cx} ${top}`,
+    `L${cx + half} ${bottom}`,
+    `L${cx + innerHalf} ${bottom}`,
+    `L${cx} ${innerTop}`,
+    `L${cx - innerHalf} ${bottom}`,
+    `L${cx - half} ${bottom}`,
+    "Z",
+  ].join(" ");
+}
+
 export const concepts = [
   {
-    id: "blickfeld",
+    id: "first",
     number: "01",
-    name: "Blickfeld",
-    direction: "Vision / Orientierung",
+    name: "First",
+    direction: "Leitform",
     summary:
-      "Ein Ursprung, drei Strahlen, ein Horizontbogen. Überblick, Richtung und Navigation – der Blick nach vorn, ohne Ornament.",
+      "Ein massives Dachdreieck, unten offen. Führung und Überblick als reine Silhouette – stark genug für ein App-Icon.",
   },
   {
-    id: "konnex",
+    id: "giebel",
     number: "02",
-    name: "Konnex",
-    direction: "Vernetzung",
+    name: "Giebel",
+    direction: "Orientierung",
     summary:
-      "Drei Pole um ein goldenes Zentrum. Menschen, Prozesse und Technologie laufen in einem Punkt zusammen – der Broker als Verbindungsstück.",
+      "Zwei Schenkel, ein goldener Firstpunkt. Konstruktion statt Haus: Richtung, Klarheit, das Mass der Linie.",
   },
   {
-    id: "versatz",
+    id: "kanzel",
     number: "03",
-    name: "Versatz",
-    direction: "Transformation",
+    name: "Kanzel",
+    direction: "Alles unter einem Dach",
     summary:
-      "Zwei Quadrate, bewusst verschoben. Der nächste Zustand liegt nicht übereinander, sondern versetzt – Digitalisierung als Bewegung.",
+      "Ein Schutzdach schwebt über drei Polen. Broker, Versicherer und Technologie – orchestriert, nicht bloss verbunden.",
   },
   {
-    id: "register",
+    id: "schicht",
     number: "04",
-    name: "Register",
-    direction: "Präzision",
+    name: "Schicht",
+    direction: "Struktur",
     summary:
-      "Passkreuze und ein ruhender Punkt. Spezifikation, Prüfung, Kontrolle – das Zeichen für Massarbeit statt Dekoration.",
+      "Zwei ineinander liegende Dachdreiecke. Die innere Goldlinie ist die gemeinsame Ordnung unter der äusseren Form.",
   },
   {
-    id: "synthese",
+    id: "bumerang",
     number: "05",
-    name: "Synthese",
-    direction: "Intelligentes System",
+    name: "Bumerang",
+    direction: "Schutzdach",
     summary:
-      "Quadrat (Struktur, Technologie) und Kreis (Wissen, Beratung) überlagern sich. Die goldene Schnittmenge ist der Kern.",
+      "Ein flaches, weites Chevron. Weniger Spitze, mehr Klammer: ein modernes Dach, das spannt und hält.",
   },
 ] as const;
