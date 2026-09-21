@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+:root {
+  --navy-950: #06101f;
+  --navy-900: #0a1b36;
+  --navy-800: #102848;
+  --navy-700: #17345c;
+  --gold-400: #c9a66b;
+  --gold-300: #d8bc8a;
+  --cream: #f6f4ef;
+  --paper: #fbfaf7;
+}
+
+@theme inline {
+  --color-navy-950: var(--navy-950);
+  --color-navy-900: var(--navy-900);
+  --color-navy-800: var(--navy-800);
+  --color-navy-700: var(--navy-700);
+  --color-navy-100: #e6edf6;
+  --color-navy-50: #f3f6fa;
+  --color-gold-500: #b08945;
+  --color-gold-400: var(--gold-400);
+  --color-gold-300: var(--gold-300);
+  --color-cream: var(--cream);
+  --color-paper: var(--paper);
+  --font-sans: var(--font-geist-sans);
+  --font-serif: var(--font-instrument);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--paper);
+  color: var(--navy-900);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--gold-400) 35%, transparent);
+  color: var(--navy-950);
+}
+
+.font-serif {
+  font-family: var(--font-instrument), Georgia, "Times New Roman", serif;
+}
+
+.hairline {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--gold-400) 70%, transparent),
+    transparent
+  );
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(201, 166, 107, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201, 166, 107, 0.07) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 70% at 70% 40%, black 20%, transparent 75%);
+}
+
+.vision-ring {
+  border: 1px solid color-mix(in srgb, var(--gold-400) 35%, transparent);
+}
