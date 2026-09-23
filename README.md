@@ -14,13 +14,13 @@ Vorläufige Firmenwebseite der **Broker Vision GmbH**, Aarau.
 
 ## Logo-Konzepte
 
-Unter `public/brand/concepts/` liegen fünf Verfeinerungen der Leitform **First** (kein Haus, keine Vernetzungspunkte, keine Buchstaben):
+Unter `public/brand/concepts/` liegen fünf finale Verfeinerungen von **Weit** (zur Logo-Auswahl):
 
-1. Massiv – reine Leitform
-2. Spitze – Führung am First
-3. Raum – Einheit unter dem Dach
-4. Weit – Überblick
-5. Kante – Ordnung
+1. Horizont – Basis
+2. Neigung – Winkel
+3. Spannweite – Breite
+4. Linie – Goldakzent
+5. Feld – Innenraum
 
 Farben: Dunkelblau `#0B1F3A`, Gold `#C9A45C`.
 

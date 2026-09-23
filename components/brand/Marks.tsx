@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { chevronPath, markColors, openPeakPath } from "@/lib/logo";
 
-type MarkProps = {
+export type MarkProps = {
   inverted?: boolean;
   size?: number;
   title?: string;
@@ -36,62 +36,41 @@ function canvas({
   );
 }
 
-/** 01 Pure refined First – the brand is the roof. */
-export function MarkMassiv({ inverted = false, size = 160, title, className }: MarkProps) {
+/** 01 Balanced Weit – baseline. */
+export function MarkHorizont({ inverted = false, size = 160, title, className }: MarkProps) {
   const { primary } = markColors(inverted);
   return canvas({
     size,
     title,
     className,
-    children: <path fill={primary} d={chevronPath(40, 12, 70, 34, 15)} />,
+    children: <path fill={primary} d={chevronPath(40, 22, 62, 36, 12)} />,
   });
 }
 
-/** 02 Roof with gold apex – superior instance at the ridge. */
-export function MarkSpitze({ inverted = false, size = 160, title, className }: MarkProps) {
-  const { primary, gold } = markColors(inverted);
-  return canvas({
-    size,
-    title,
-    className,
-    children: (
-      <>
-        <path fill={primary} d={chevronPath(40, 18, 70, 34, 15)} />
-        <path fill={gold} d={openPeakPath(40, 10, 28, 10)} />
-      </>
-    ),
-  });
-}
-
-/** 03 Roof over a unified gold field – no points, one space. */
-export function MarkRaum({ inverted = false, size = 160, title, className }: MarkProps) {
-  const { primary, gold } = markColors(inverted);
-  return canvas({
-    size,
-    title,
-    className,
-    children: (
-      <>
-        <path fill={gold} d={openPeakPath(40, 36, 62, 18)} />
-        <path fill={primary} d={chevronPath(40, 12, 58, 34, 14)} />
-      </>
-    ),
-  });
-}
-
-/** 04 Wider spanning First – overview. */
-export function MarkWeit({ inverted = false, size = 160, title, className }: MarkProps) {
+/** 02 Slightly steeper Weit. */
+export function MarkNeigung({ inverted = false, size = 160, title, className }: MarkProps) {
   const { primary } = markColors(inverted);
   return canvas({
     size,
     title,
     className,
-    children: <path fill={primary} d={chevronPath(40, 20, 64, 38, 13)} />,
+    children: <path fill={primary} d={chevronPath(40, 16, 64, 34, 12)} />,
   });
 }
 
-/** 05 Solid First with gold inner lip – order under the roof. */
-export function MarkKante({ inverted = false, size = 160, title, className }: MarkProps) {
+/** 03 Wider, flatter Weit. */
+export function MarkSpannweite({ inverted = false, size = 160, title, className }: MarkProps) {
+  const { primary } = markColors(inverted);
+  return canvas({
+    size,
+    title,
+    className,
+    children: <path fill={primary} d={chevronPath(40, 26, 60, 40, 11)} />,
+  });
+}
+
+/** 04 Weit + gold inner edge. */
+export function MarkLinie({ inverted = false, size = 160, title, className }: MarkProps) {
   const { primary, gold } = markColors(inverted);
   return canvas({
     size,
@@ -99,17 +78,59 @@ export function MarkKante({ inverted = false, size = 160, title, className }: Ma
     className,
     children: (
       <>
-        <path fill={primary} d={chevronPath(40, 12, 70, 34, 15)} />
-        <path fill={gold} d={chevronPath(40, 34, 64, 20, 6)} />
+        <path fill={primary} d={chevronPath(40, 22, 62, 36, 12)} />
+        <path fill={gold} d={chevronPath(40, 38, 58, 22, 5)} />
+      </>
+    ),
+  });
+}
+
+/** 05 Weit + gold field under the roof. */
+export function MarkFeld({ inverted = false, size = 160, title, className }: MarkProps) {
+  const { primary, gold } = markColors(inverted);
+  return canvas({
+    size,
+    title,
+    className,
+    children: (
+      <>
+        <path fill={gold} d={openPeakPath(40, 40, 56, 16)} />
+        <path fill={primary} d={chevronPath(40, 22, 56, 36, 12)} />
       </>
     ),
   });
 }
 
 export const markComponents = {
-  massiv: MarkMassiv,
-  spitze: MarkSpitze,
-  raum: MarkRaum,
-  weit: MarkWeit,
-  kante: MarkKante,
+  horizont: MarkHorizont,
+  neigung: MarkNeigung,
+  spannweite: MarkSpannweite,
+  linie: MarkLinie,
+  feld: MarkFeld,
 } as const;
+
+type LockupProps = MarkProps & {
+  mark: keyof typeof markComponents;
+};
+
+/** Mark + wordmark for final selection. */
+export function LogoLockup({
+  mark,
+  inverted = false,
+  size = 40,
+  className = "",
+}: LockupProps) {
+  const Mark = markComponents[mark];
+  return (
+    <span
+      className={`inline-flex items-center gap-3 ${
+        inverted ? "text-white" : "text-navy-900"
+      } ${className}`}
+    >
+      <Mark inverted={inverted} size={size} />
+      <span className="text-[1.15rem] font-semibold tracking-tight">
+        Broker <span className="text-gold-400">Vision</span>
+      </span>
+    </span>
+  );
+}

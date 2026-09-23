@@ -43,45 +43,49 @@ export function openPeakPath(
   return [`M${cx} ${top}`, `L${cx + half} ${bottom}`, `L${cx - half} ${bottom}`, "Z"].join(" ");
 }
 
+/**
+ * Final Weit refinements – subtle differences only.
+ * Base reference: wide shallow First (Überblick).
+ */
 export const concepts = [
   {
-    id: "massiv",
+    id: "horizont",
     number: "01",
-    name: "Massiv",
-    direction: "Leitform",
+    name: "Horizont",
+    direction: "Basis",
     summary:
-      "Die reine First-Silhouette, etwas kräftiger und ikonischer. Führung und Überblick ohne Zusatz – die Marke ist das Dach.",
+      "Die ausgewogene Weit-Silhouette. Breite und Winkel im Gleichgewicht – Überblick als ruhige Leitform.",
   },
   {
-    id: "spitze",
+    id: "neigung",
     number: "02",
-    name: "Spitze",
-    direction: "Führung",
+    name: "Neigung",
+    direction: "Winkel",
     summary:
-      "Das Dach trägt, die Goldspitze markiert die übergeordnete Instanz. Ein Akzent oben – nicht Vernetzung unten.",
+      "Etwas steilerer First bei gleicher Spannweite. Mehr Führung in der Silhouette, ohne steil zu werden.",
   },
   {
-    id: "raum",
+    id: "spannweite",
     number: "03",
-    name: "Raum",
-    direction: "Einheit",
+    name: "Spannweite",
+    direction: "Breite",
     summary:
-      "Unter dem Dach liegt ein goldenes Feld. Fachwissen, Prozesse und Technologie als ein Raum – geschlossen in der Form, offen nach unten.",
+      "Noch etwas breiter und flacher. Maximale Weite – Überblick und Vertrauen als dominante Geste.",
   },
   {
-    id: "weit",
+    id: "linie",
     number: "04",
-    name: "Weit",
-    direction: "Überblick",
+    name: "Linie",
+    direction: "Goldakzent",
     summary:
-      "Breiter, flacher First. Mehr Spannweite: Überblick und Vertrauen statt steiler Spitze.",
+      "Weit mit goldener Innenkante. Das Dach bleibt dominant; die Linie ordnet den Raum darunter.",
   },
   {
-    id: "kante",
+    id: "feld",
     number: "05",
-    name: "Kante",
-    direction: "Ordnung",
+    name: "Feld",
+    direction: "Innenraum",
     summary:
-      "Massives Dach mit goldener Innenkante. Die Leitform bleibt dominant; die Kante hält den Raum darunter in Ordnung.",
+      "Weit mit goldener Fläche im Innenraum. Fachwissen, Prozesse und Technologie als ein Feld unter dem Dach.",
   },
 ] as const;
