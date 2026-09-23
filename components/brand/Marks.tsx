@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { chevronPath, markColors } from "@/lib/logo";
+import { chevronPath, markColors, openPeakPath } from "@/lib/logo";
 
 type MarkProps = {
   inverted?: boolean;
@@ -36,19 +36,19 @@ function canvas({
   );
 }
 
-/** 01 Steep solid roof peak. */
-export function MarkFirst({ inverted = false, size = 160, title, className }: MarkProps) {
+/** 01 Pure refined First – the brand is the roof. */
+export function MarkMassiv({ inverted = false, size = 160, title, className }: MarkProps) {
   const { primary } = markColors(inverted);
   return canvas({
     size,
     title,
     className,
-    children: <path fill={primary} d={chevronPath(40, 14, 68, 32, 14)} />,
+    children: <path fill={primary} d={chevronPath(40, 12, 70, 34, 15)} />,
   });
 }
 
-/** 02 Open gable with gold ridge. */
-export function MarkGiebel({ inverted = false, size = 160, title, className }: MarkProps) {
+/** 02 Roof with gold apex – superior instance at the ridge. */
+export function MarkSpitze({ inverted = false, size = 160, title, className }: MarkProps) {
   const { primary, gold } = markColors(inverted);
   return canvas({
     size,
@@ -56,20 +56,15 @@ export function MarkGiebel({ inverted = false, size = 160, title, className }: M
     className,
     children: (
       <>
-        <path
-          d="M14 66 L40 18 M66 66 L40 18"
-          stroke={primary}
-          strokeWidth="8"
-          strokeLinecap="butt"
-        />
-        <circle cx="40" cy="18" r="6" fill={gold} />
+        <path fill={primary} d={chevronPath(40, 18, 70, 34, 15)} />
+        <path fill={gold} d={openPeakPath(40, 10, 28, 10)} />
       </>
     ),
   });
 }
 
-/** 03 Canopy over three orchestrated poles. */
-export function MarkKanzel({ inverted = false, size = 160, title, className }: MarkProps) {
+/** 03 Roof over a unified gold field – no points, one space. */
+export function MarkRaum({ inverted = false, size = 160, title, className }: MarkProps) {
   const { primary, gold } = markColors(inverted);
   return canvas({
     size,
@@ -77,33 +72,26 @@ export function MarkKanzel({ inverted = false, size = 160, title, className }: M
     className,
     children: (
       <>
-        <path fill={primary} d={chevronPath(40, 14, 36, 38, 9)} />
-        <circle cx="22" cy="62" r="5" fill={primary} />
-        <circle cx="40" cy="62" r="5" fill={gold} />
-        <circle cx="58" cy="62" r="5" fill={primary} />
+        <path fill={gold} d={openPeakPath(40, 36, 62, 18)} />
+        <path fill={primary} d={chevronPath(40, 12, 58, 34, 14)} />
       </>
     ),
   });
 }
 
-/** 04 Nested double roof. */
-export function MarkSchicht({ inverted = false, size = 160, title, className }: MarkProps) {
-  const { primary, gold } = markColors(inverted);
+/** 04 Wider spanning First – overview. */
+export function MarkWeit({ inverted = false, size = 160, title, className }: MarkProps) {
+  const { primary } = markColors(inverted);
   return canvas({
     size,
     title,
     className,
-    children: (
-      <>
-        <path fill={primary} d={chevronPath(40, 12, 68, 34, 11)} />
-        <path fill={gold} d={chevronPath(40, 36, 64, 18, 6)} />
-      </>
-    ),
+    children: <path fill={primary} d={chevronPath(40, 20, 64, 38, 13)} />,
   });
 }
 
-/** 05 Wide shallow boomerang / canopy. */
-export function MarkBumerang({ inverted = false, size = 160, title, className }: MarkProps) {
+/** 05 Solid First with gold inner lip – order under the roof. */
+export function MarkKante({ inverted = false, size = 160, title, className }: MarkProps) {
   const { primary, gold } = markColors(inverted);
   return canvas({
     size,
@@ -111,17 +99,17 @@ export function MarkBumerang({ inverted = false, size = 160, title, className }:
     className,
     children: (
       <>
-        <path fill={primary} d={chevronPath(40, 24, 58, 36, 13)} />
-        <path fill={gold} d={chevronPath(40, 32, 58, 28, 8)} />
+        <path fill={primary} d={chevronPath(40, 12, 70, 34, 15)} />
+        <path fill={gold} d={chevronPath(40, 34, 64, 20, 6)} />
       </>
     ),
   });
 }
 
 export const markComponents = {
-  first: MarkFirst,
-  giebel: MarkGiebel,
-  kanzel: MarkKanzel,
-  schicht: MarkSchicht,
-  bumerang: MarkBumerang,
+  massiv: MarkMassiv,
+  spitze: MarkSpitze,
+  raum: MarkRaum,
+  weit: MarkWeit,
+  kante: MarkKante,
 } as const;

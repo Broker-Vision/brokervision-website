@@ -33,45 +33,55 @@ export function chevronPath(
   ].join(" ");
 }
 
+/** Open triangle under a roof (no base wall). */
+export function openPeakPath(
+  cx: number,
+  top: number,
+  bottom: number,
+  half: number,
+): string {
+  return [`M${cx} ${top}`, `L${cx + half} ${bottom}`, `L${cx - half} ${bottom}`, "Z"].join(" ");
+}
+
 export const concepts = [
   {
-    id: "first",
+    id: "massiv",
     number: "01",
-    name: "First",
+    name: "Massiv",
     direction: "Leitform",
     summary:
-      "Ein massives Dachdreieck, unten offen. Führung und Überblick als reine Silhouette – stark genug für ein App-Icon.",
+      "Die reine First-Silhouette, etwas kräftiger und ikonischer. Führung und Überblick ohne Zusatz – die Marke ist das Dach.",
   },
   {
-    id: "giebel",
+    id: "spitze",
     number: "02",
-    name: "Giebel",
-    direction: "Orientierung",
+    name: "Spitze",
+    direction: "Führung",
     summary:
-      "Zwei Schenkel, ein goldener Firstpunkt. Konstruktion statt Haus: Richtung, Klarheit, das Mass der Linie.",
+      "Das Dach trägt, die Goldspitze markiert die übergeordnete Instanz. Ein Akzent oben – nicht Vernetzung unten.",
   },
   {
-    id: "kanzel",
+    id: "raum",
     number: "03",
-    name: "Kanzel",
-    direction: "Alles unter einem Dach",
+    name: "Raum",
+    direction: "Einheit",
     summary:
-      "Ein Schutzdach schwebt über drei Polen. Broker, Versicherer und Technologie – orchestriert, nicht bloss verbunden.",
+      "Unter dem Dach liegt ein goldenes Feld. Fachwissen, Prozesse und Technologie als ein Raum – geschlossen in der Form, offen nach unten.",
   },
   {
-    id: "schicht",
+    id: "weit",
     number: "04",
-    name: "Schicht",
-    direction: "Struktur",
+    name: "Weit",
+    direction: "Überblick",
     summary:
-      "Zwei ineinander liegende Dachdreiecke. Die innere Goldlinie ist die gemeinsame Ordnung unter der äusseren Form.",
+      "Breiter, flacher First. Mehr Spannweite: Überblick und Vertrauen statt steiler Spitze.",
   },
   {
-    id: "bumerang",
+    id: "kante",
     number: "05",
-    name: "Bumerang",
-    direction: "Schutzdach",
+    name: "Kante",
+    direction: "Ordnung",
     summary:
-      "Ein flaches, weites Chevron. Weniger Spitze, mehr Klammer: ein modernes Dach, das spannt und hält.",
+      "Massives Dach mit goldener Innenkante. Die Leitform bleibt dominant; die Kante hält den Raum darunter in Ordnung.",
   },
 ] as const;

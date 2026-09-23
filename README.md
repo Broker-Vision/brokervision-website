@@ -14,13 +14,13 @@ Vorläufige Firmenwebseite der **Broker Vision GmbH**, Aarau.
 
 ## Logo-Konzepte
 
-Unter `public/brand/concepts/` liegen fünf Dachdreieck-Varianten (keine Häuser, keine Buchstaben):
+Unter `public/brand/concepts/` liegen fünf Verfeinerungen der Leitform **First** (kein Haus, keine Vernetzungspunkte, keine Buchstaben):
 
-1. First – Leitform
-2. Giebel – Orientierung
-3. Kanzel – alles unter einem Dach
-4. Schicht – Struktur
-5. Bumerang – Schutzdach
+1. Massiv – reine Leitform
+2. Spitze – Führung am First
+3. Raum – Einheit unter dem Dach
+4. Weit – Überblick
+5. Kante – Ordnung
 
 Farben: Dunkelblau `#0B1F3A`, Gold `#C9A45C`.
 
