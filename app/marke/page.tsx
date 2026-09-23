@@ -6,16 +6,16 @@ import { concepts } from "@/lib/logo";
 export const metadata: Metadata = {
   title: "Markenkonzepte",
   description:
-    "Fünf Dachdreieck-Varianten für Broker Vision – Leitform, Giebel, Schutzdach. Noch keine Auswahl.",
+    "Fünf Verfeinerungen der Leitform First für Broker Vision. Das Dach ist die Marke.",
 };
 
 export default function BrandPage() {
   return (
     <>
       <PageHero
-        eyebrow="Markenentwicklung"
-        title="Fünf Dachdreiecke."
-        lead="Kein Haus, kein Buchstabe, kein Schild. Eine geometrische Leitform: alles unter einem Dach – Fachwissen, Prozesse und Technologie orchestriert. Bitte vergleichen, noch nicht entscheiden."
+        eyebrow="Markenentwicklung · First"
+        title="Fünf Verfeinerungen."
+        lead="Nur die Leitform. Das Dach ist die Marke – Führung und Überblick. Unter dem Dach liegen Fachwissen, Prozesse und Technologie als Einheit. Keine Vernetzungspunkte, kein Haus, keine Buchstaben."
       />
 
       <section className="mx-auto max-w-7xl px-5 py-14 sm:px-8">
@@ -48,8 +48,8 @@ export default function BrandPage() {
           })}
         </div>
         <p className="mt-10 max-w-3xl text-sm text-navy-800/65">
-          Die vorherigen Konzepte (Blickfeld, Konnex, Versatz, Register, Synthese) sind verworfen.
-          Header und Footer bleiben bei der Wortmarke, bis ein Symbol gewählt ist.
+          Ausgangspunkt ist ausschliesslich Variante First. Giebel, Kanzel, Schicht und Bumerang
+          sind beiseitegelegt. Header und Footer bleiben bei der Wortmarke.
         </p>
       </section>
     </>
