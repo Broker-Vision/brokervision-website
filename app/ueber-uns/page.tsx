@@ -20,7 +20,7 @@ export default function AboutPage() {
       <section className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-7">
-            <h2 className="font-serif text-3xl sm:text-4xl">Herkunft und Anspruch</h2>
+            <h2 className="font-display text-3xl sm:text-4xl">Herkunft und Anspruch</h2>
             <p className="mt-5 leading-relaxed text-navy-800/80">
               Broker Vision entstand aus über 20 Jahren Erfahrung in der
               Versicherungsbranche und fundierter Praxis im Brokergeschäft. Aus der
@@ -73,11 +73,11 @@ export default function AboutPage() {
 
       <section className="bg-navy-50">
         <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
-          <h2 className="font-serif text-3xl sm:text-4xl">Worauf wir setzen</h2>
+          <h2 className="font-display text-3xl sm:text-4xl">Worauf wir setzen</h2>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {values.map((value) => (
               <article key={value.title} className="bg-white p-6">
-                <h3 className="font-serif text-2xl">{value.title}</h3>
+                <h3 className="font-display text-2xl">{value.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-navy-800/75">{value.text}</p>
               </article>
             ))}
@@ -87,10 +87,10 @@ export default function AboutPage() {
 
       <section className="mx-auto max-w-6xl px-5 py-16 sm:px-8">
         <div className="bg-navy-900 px-6 py-10 text-white sm:px-10">
-          <h2 className="font-serif text-3xl">Nächster Schritt</h2>
+          <h2 className="font-display text-3xl">Nächster Schritt</h2>
           <p className="mt-3 max-w-2xl text-white/75">
-            Sie möchten prüfen, wie die Plattform in Ihrem Haus wirken kann? Schreiben Sie
-            uns – wir freuen uns auf den Austausch.
+            Sie möchten prüfen, wie die Plattform in Ihrem Unternehmen wirken kann?
+            Schreiben Sie uns – wir freuen uns auf den Austausch.
           </p>
           <Link
             href="/kontakt/"

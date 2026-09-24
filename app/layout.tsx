@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Instrument_Serif } from "next/font/google";
+import { Geist, Space_Grotesk } from "next/font/google";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { site } from "@/lib/site";
@@ -10,10 +10,10 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-const instrument = Instrument_Serif({
-  variable: "--font-instrument",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
-  weight: "400",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -61,7 +61,7 @@ export default function RootLayout({
   return (
     <html lang="de-CH">
       <body
-        className={`${geistSans.variable} ${instrument.variable} flex min-h-screen flex-col antialiased`}
+        className={`${geistSans.variable} ${spaceGrotesk.variable} flex min-h-screen flex-col antialiased`}
       >
         <a
           href="#inhalt"

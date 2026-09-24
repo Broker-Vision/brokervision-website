@@ -61,7 +61,7 @@ export function ContactForm() {
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold-500">
           Nachricht erfasst
         </p>
-        <h2 className="font-serif mt-3 text-3xl text-navy-900">Vielen Dank.</h2>
+        <h2 className="font-display mt-3 text-3xl text-navy-900">Vielen Dank.</h2>
         <p className="mt-3 text-navy-800/80">
           Ihre Anfrage ist vorbereitet. Das Formular versendet derzeit noch keine
           Daten an einen Server. Bitte schreiben Sie uns direkt an{" "}

@@ -29,7 +29,7 @@ export default function BrandPage() {
               <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-gold-400">
                 Final ausgewählte Marke · {selected.number} · {selected.direction}
               </p>
-              <h2 className="font-serif mt-1 text-3xl">{selected.name}</h2>
+              <h2 className="font-display mt-1 text-3xl">{selected.name}</h2>
             </div>
             <p className="max-w-md text-sm leading-relaxed text-white/70 sm:text-right">
               {selected.summary}
@@ -77,7 +77,7 @@ export default function BrandPage() {
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-navy-800/45">
             Verworfene Entwürfe
           </p>
-          <h2 className="font-serif mt-2 text-3xl text-navy-900">Nicht ausgewählt</h2>
+          <h2 className="font-display mt-2 text-3xl text-navy-900">Nicht ausgewählt</h2>
           <p className="mt-3 max-w-2xl text-sm text-navy-800/70">
             Die übrigen Weit-Verfeinerungen bleiben als Dokumentation der Entscheidung sichtbar.
           </p>
@@ -97,7 +97,7 @@ export default function BrandPage() {
                     <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-navy-800/40">
                       {concept.number} · Entwurf
                     </p>
-                    <h3 className="font-serif mt-1 text-xl text-navy-900">{concept.name}</h3>
+                    <h3 className="font-display mt-1 text-xl text-navy-900">{concept.name}</h3>
                     <p className="mt-2 text-sm leading-relaxed text-navy-800/60">{concept.summary}</p>
                   </div>
                 </article>

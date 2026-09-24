@@ -19,7 +19,7 @@ export default function ContactPage() {
 
       <section className="mx-auto grid max-w-6xl gap-10 px-5 py-16 sm:px-8 lg:grid-cols-[1fr_1.15fr]">
         <aside>
-          <h2 className="font-serif text-3xl">Angaben</h2>
+          <h2 className="font-display text-3xl">Angaben</h2>
           <address className="mt-6 not-italic leading-relaxed text-navy-800/80">
             <strong className="text-navy-900">{site.legalName}</strong>
             <br />

@@ -20,7 +20,7 @@ export default function PlatformPage() {
 
       <section className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
         <div className="max-w-3xl">
-          <h2 className="font-serif text-3xl sm:text-4xl">Plattform statt Einzelprodukte</h2>
+          <h2 className="font-display text-3xl sm:text-4xl">Plattform statt Einzelprodukte</h2>
           <p className="mt-5 leading-relaxed text-navy-800/80">
             Viele bestehende Systeme verwalten Daten. Broker Vision automatisiert Arbeit:
             Offerten vorbereiten, Dokumente analysieren, Prozesse führen und Bestände im
@@ -37,7 +37,7 @@ export default function PlatformPage() {
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold-500">
             Module
           </p>
-          <h2 className="font-serif mt-3 max-w-2xl text-3xl sm:text-4xl">
+          <h2 className="font-display mt-3 max-w-2xl text-3xl sm:text-4xl">
             Bausteine einer gemeinsamen Plattform
           </h2>
           <ol className="mt-12 space-y-6">
@@ -47,10 +47,10 @@ export default function PlatformPage() {
                 id={module.slug}
                 className="grid gap-4 border border-navy-900/10 bg-white p-6 sm:p-8 lg:grid-cols-[6rem_1fr]"
               >
-                <p className="font-serif text-3xl text-gold-500">0{index + 1}</p>
+                <p className="font-display text-3xl text-gold-500">0{index + 1}</p>
                 <div>
                   <div className="flex flex-wrap items-center gap-3">
-                    <h3 className="font-serif text-2xl text-navy-900 sm:text-3xl">
+                    <h3 className="font-display text-2xl text-navy-900 sm:text-3xl">
                       {module.title}
                     </h3>
                     {"upcoming" in module && module.upcoming ? (
@@ -72,7 +72,7 @@ export default function PlatformPage() {
       <section className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
-            <h2 className="font-serif text-3xl sm:text-4xl">
+            <h2 className="font-display text-3xl sm:text-4xl">
               Dokumentenanalyse und Automatisierung
             </h2>
             <p className="mt-4 leading-relaxed text-navy-800/80">
@@ -86,7 +86,7 @@ export default function PlatformPage() {
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold-400">
               In Aktion
             </p>
-            <p className="font-serif mt-3 text-2xl leading-snug">
+            <p className="font-display mt-3 text-2xl leading-snug">
               Vom Upload zur Ausschreibung – ohne Medienbruch.
             </p>
             <Link
@@ -102,7 +102,7 @@ export default function PlatformPage() {
       <section className="bg-navy-950 text-white">
         <div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-16 sm:flex-row sm:items-center sm:justify-between sm:px-8 sm:py-20">
           <div>
-            <h2 className="font-serif text-3xl">Passt die Plattform zu Ihrem Haus?</h2>
+            <h2 className="font-display text-3xl">Passt Broker Vision zu Ihrem Unternehmen?</h2>
             <p className="mt-2 max-w-xl text-white/70">
               Schildern Sie uns Ihren Kontext. Wir zeigen, welche Module zuerst den grössten
               Nutzen bringen.

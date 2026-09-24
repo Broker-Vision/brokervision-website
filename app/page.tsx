@@ -30,7 +30,7 @@ export default function HomePage() {
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold-400">
             Broker Vision · Digitaler Arbeitsplatz
           </p>
-          <h1 className="font-serif mt-5 max-w-3xl text-4xl leading-[1.12] sm:text-5xl lg:text-6xl">
+          <h1 className="font-display mt-5 max-w-3xl text-4xl leading-[1.12] sm:text-5xl lg:text-6xl">
             {site.headline}
           </h1>
           <p className="mt-5 text-xl font-medium text-gold-300 sm:text-2xl">
@@ -72,7 +72,7 @@ export default function HomePage() {
           ].map((item) => (
             <div key={item.label}>
               <p className="text-xs uppercase tracking-[0.18em] text-gold-500">{item.label}</p>
-              <p className="mt-2 font-serif text-2xl text-navy-900">{item.value}</p>
+              <p className="mt-2 font-display text-2xl text-navy-900">{item.value}</p>
             </div>
           ))}
         </div>
@@ -82,7 +82,7 @@ export default function HomePage() {
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold-500">
           Die Herausforderung
         </p>
-        <h2 className="font-serif mt-3 max-w-2xl text-3xl sm:text-4xl">
+        <h2 className="font-display mt-3 max-w-2xl text-3xl sm:text-4xl">
           Viele Systeme verwalten Daten. Broker Vision automatisiert Arbeit.
         </h2>
         <p className="mt-5 max-w-2xl leading-relaxed text-navy-800/80">
@@ -107,7 +107,7 @@ export default function HomePage() {
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold-500">
                 Warum Broker Vision
               </p>
-              <h2 className="font-serif mt-3 text-3xl sm:text-4xl">
+              <h2 className="font-display mt-3 text-3xl sm:text-4xl">
                 Entstanden aus dem Brokeralltag – nicht aus dem Katalog.
               </h2>
               <p className="mt-5 leading-relaxed text-navy-800/80">
@@ -122,7 +122,7 @@ export default function HomePage() {
               </p>
             </div>
             <blockquote className="rounded-2xl bg-navy-900 p-8 text-white sm:p-10">
-              <p className="font-serif text-2xl leading-snug sm:text-3xl">
+              <p className="font-display text-2xl leading-snug sm:text-3xl">
                 «{site.tagline}»
               </p>
               <p className="mt-6 text-sm text-white/60">Broker Vision · Leitsatz</p>
@@ -137,7 +137,7 @@ export default function HomePage() {
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold-500">
               Plattform
             </p>
-            <h2 className="font-serif mt-3 max-w-xl text-3xl sm:text-4xl">
+            <h2 className="font-display mt-3 max-w-xl text-3xl sm:text-4xl">
               Eine Plattform. Module, die zusammenarbeiten.
             </h2>
             <p className="mt-4 max-w-2xl text-navy-800/80">
@@ -167,7 +167,7 @@ export default function HomePage() {
                   Modul
                 </p>
               )}
-              <h3 className="font-serif mt-2 text-xl text-navy-900">{module.title}</h3>
+              <h3 className="font-display mt-2 text-xl text-navy-900">{module.title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-navy-800/75">
                 {module.excerpt}
               </p>
@@ -182,7 +182,7 @@ export default function HomePage() {
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold-400">
             Broker Vision in Aktion
           </p>
-          <h2 className="font-serif mt-3 max-w-2xl text-3xl sm:text-4xl">
+          <h2 className="font-display mt-3 max-w-2xl text-3xl sm:text-4xl">
             Vom Dokument zur versandfertigen Ausschreibung.
           </h2>
           <p className="mt-4 max-w-2xl text-white/70">
@@ -199,7 +199,7 @@ export default function HomePage() {
                 <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-gold-400">
                   Video / Demo
                 </p>
-                <p className="font-serif mt-4 max-w-md text-2xl sm:text-3xl">
+                <p className="font-display mt-4 max-w-md text-2xl sm:text-3xl">
                   Platzhalter für Demo und Produktvideo
                 </p>
                 <p className="mt-3 max-w-sm text-sm text-white/65">
@@ -220,7 +220,7 @@ export default function HomePage() {
                   key={step}
                   className="flex items-start gap-4 rounded-xl border border-white/10 bg-white/5 px-4 py-3.5"
                 >
-                  <span className="font-serif text-lg text-gold-400">0{index + 1}</span>
+                  <span className="font-display text-lg text-gold-400">0{index + 1}</span>
                   <span className="pt-0.5 text-sm text-white/85">{step}</span>
                 </li>
               ))}
@@ -233,14 +233,14 @@ export default function HomePage() {
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold-500">
           Nutzen
         </p>
-        <h2 className="font-serif mt-3 max-w-2xl text-3xl sm:text-4xl">
+        <h2 className="font-display mt-3 max-w-2xl text-3xl sm:text-4xl">
           Was Broker Vision im Alltag verändert.
         </h2>
         <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {benefits.map((benefit, index) => (
             <article key={benefit.title} className="border-t border-navy-900/15 pt-5">
               <p className="text-xs text-gold-500">0{index + 1}</p>
-              <h3 className="font-serif mt-2 text-xl text-navy-900">{benefit.title}</h3>
+              <h3 className="font-display mt-2 text-xl text-navy-900">{benefit.title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-navy-800/75">{benefit.text}</p>
             </article>
           ))}
@@ -254,7 +254,7 @@ export default function HomePage() {
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold-500">
                 Sicherheit
               </p>
-              <h2 className="font-serif mt-3 text-3xl sm:text-4xl">
+              <h2 className="font-display mt-3 text-3xl sm:text-4xl">
                 Sicherheit als Wettbewerbsvorteil.
               </h2>
               <p className="mt-5 leading-relaxed text-navy-800/80">
@@ -293,7 +293,7 @@ export default function HomePage() {
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold-500">
               Über uns
             </p>
-            <h2 className="font-serif mt-3 text-3xl sm:text-4xl">
+            <h2 className="font-display mt-3 text-3xl sm:text-4xl">
               Spezialisiertes Softwareunternehmen mit Branchen-Know-how.
             </h2>
             <p className="mt-5 leading-relaxed text-navy-800/80">
@@ -310,7 +310,7 @@ export default function HomePage() {
           <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
             {values.map((value) => (
               <article key={value.title} className="border border-navy-900/10 bg-white p-5">
-                <h3 className="font-serif text-xl">{value.title}</h3>
+                <h3 className="font-display text-xl">{value.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-navy-800/75">{value.text}</p>
               </article>
             ))}
@@ -321,7 +321,7 @@ export default function HomePage() {
       <section className="bg-navy-950 text-white">
         <div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-16 sm:flex-row sm:items-center sm:justify-between sm:px-8 sm:py-20">
           <div>
-            <h2 className="font-serif text-3xl sm:text-4xl">Lassen Sie uns sprechen.</h2>
+            <h2 className="font-display text-3xl sm:text-4xl">Lassen Sie uns sprechen.</h2>
             <p className="mt-3 max-w-lg text-white/70">
               Ob Einstieg in die Plattform oder konkrete Prozessfrage: Wir zeigen,
               wo Automatisierung im Brokeralltag den grössten Hebel hat.
