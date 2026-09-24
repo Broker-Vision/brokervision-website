@@ -36,8 +36,8 @@ export default function ImprintPage() {
             </a>
           </p>
           <p>
-            Diese Website dient als vorläufiger Unternehmensauftritt. Inhalte
-            können sich ändern.
+            Inhaltlich verantwortlich für den Unternehmensauftritt ist{" "}
+            {site.legalName}.
           </p>
         </div>
       </section>

@@ -1,16 +1,22 @@
 # Broker Vision
 
-Vorläufige Firmenwebseite der **Broker Vision GmbH**, Aarau.
+Firmenwebseite der **Broker Vision GmbH**, Aarau – der digitale Arbeitsplatz für Versicherungsbroker.
 
 ## Seiten
 
 - Startseite `/`
+- Plattform `/plattform`
 - Über uns `/ueber-uns`
-- Lösungen `/loesungen`
 - Kontakt `/kontakt`
-- Marke `/marke` – finale Marke Feld und verworfene Entwürfe
+- Marke `/marke` – finale Marke Feld (nicht in der Hauptnavigation)
 - Impressum `/impressum`
 - Datenschutz `/datenschutz`
+
+## Positionierung
+
+Broker Vision entwickelt digitale Lösungen für Versicherungsbroker, Finanzberater und Beratungsunternehmen in der Schweiz.
+
+Leitsatz: **Menschen sollen beraten. Software soll arbeiten.**
 
 ## Logo
 
@@ -22,8 +28,6 @@ Dateien unter `public/brand/`:
 - `favicon-32.svg`
 - `app-icon.svg` / `apple-touch-icon.svg`
 - `og-image.png` – Open Graph / Social Preview
-
-Weitere Weit-Entwürfe bleiben unter `/marke` als verworfene Varianten dokumentiert.
 
 Farben: Dunkelblau `#0B1F3A`, Gold `#C9A45C`.
 

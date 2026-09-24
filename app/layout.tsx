@@ -18,7 +18,7 @@ const instrument = Instrument_Serif({
 
 export const metadata: Metadata = {
   title: {
-    default: `${site.name} | Digitale Lösungen für Broker`,
+    default: `${site.name} | Der digitale Arbeitsplatz für Versicherungsbroker`,
     template: `%s | ${site.name}`,
   },
   description: site.description,

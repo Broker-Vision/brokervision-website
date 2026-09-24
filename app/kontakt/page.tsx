@@ -5,7 +5,7 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Kontakt",
-  description: `Kontaktieren Sie ${site.legalName} in Aarau für ein Gespräch zu digitalen Brokerlösungen.`,
+  description: `Kontaktieren Sie ${site.legalName} in Aarau für ein Gespräch zur Broker-Vision-Plattform.`,
 };
 
 export default function ContactPage() {
@@ -14,7 +14,7 @@ export default function ContactPage() {
       <PageHero
         eyebrow="Kontakt"
         title="Wir sind erreichbar."
-        lead="Ob konkrete Anfrage oder erstes Kennenlernen: Schreiben Sie uns. Wir antworten in der Regel innerhalb weniger Werktage."
+        lead="Ob Einstieg in die Plattform oder konkrete Prozessfrage: Schreiben Sie uns. Wir antworten in der Regel innerhalb weniger Werktage."
       />
 
       <section className="mx-auto grid max-w-6xl gap-10 px-5 py-16 sm:px-8 lg:grid-cols-[1fr_1.15fr]">

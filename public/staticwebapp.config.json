@@ -1,5 +1,17 @@
 {
   "trailingSlash": "auto",
+  "routes": [
+    {
+      "route": "/loesungen",
+      "redirect": "/plattform",
+      "statusCode": 301
+    },
+    {
+      "route": "/loesungen/",
+      "redirect": "/plattform/",
+      "statusCode": 301
+    }
+  ],
   "responseOverrides": {
     "404": {
       "rewrite": "/404.html"

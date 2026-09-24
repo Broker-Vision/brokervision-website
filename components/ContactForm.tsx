@@ -4,10 +4,11 @@ import { FormEvent, useState } from "react";
 
 const interests = [
   "Allgemeine Anfrage",
-  "Portfolio & Mandatsüberblick",
-  "Prozesse & Workflows",
-  "Integrationen",
-  "Individuelle Entwicklung",
+  "Plattform-Übersicht",
+  "Offerten & Dokumentenanalyse",
+  "Workflow-Automatisierung",
+  "CRM & Dokumentenmanagement",
+  "Sicherheit & Cloud",
 ];
 
 type FormState = {
@@ -62,8 +63,8 @@ export function ContactForm() {
         </p>
         <h2 className="font-serif mt-3 text-3xl text-navy-900">Vielen Dank.</h2>
         <p className="mt-3 text-navy-800/80">
-          Ihre Anfrage ist vorbereitet. In dieser vorläufigen Website wird das
-          Formular noch nicht versendet. Bitte schreiben Sie uns direkt an{" "}
+          Ihre Anfrage ist vorbereitet. Das Formular versendet derzeit noch keine
+          Daten an einen Server. Bitte schreiben Sie uns direkt an{" "}
           <a className="underline decoration-gold-400 underline-offset-4" href="mailto:info@brokervision.ch">
             info@brokervision.ch
           </a>

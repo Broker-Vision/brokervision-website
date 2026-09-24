@@ -5,7 +5,7 @@ import { site, values } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Über uns",
-  description: `Wer hinter ${site.name} steht und wie wir für Broker in der Versicherungs- und Finanzbranche arbeiten.`,
+  description: `Über ${site.name}: spezialisiertes Softwareunternehmen für Versicherungsbroker mit über 20 Jahren Branchenerfahrung.`,
 };
 
 export default function AboutPage() {
@@ -13,38 +13,38 @@ export default function AboutPage() {
     <>
       <PageHero
         eyebrow="Über uns"
-        title="Sicht schaffen. Verantwortung tragen."
-        lead="Broker Vision GmbH ist ein IT-Unternehmen in Aarau. Wir verbinden Softwareentwicklung mit dem Verständnis für unabhängige Versicherungs- und Finanzberatung."
+        title="Spezialisiert auf Broker. Gebaut für den Alltag."
+        lead="Broker Vision ist ein Softwareunternehmen für Versicherungsbroker, Finanzberater und Beratungsunternehmen in der Schweiz – mit tiefem Branchen-Know-how und Fokus auf Digitalisierung und Automatisierung."
       />
 
       <section className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-7">
-            <h2 className="font-serif text-3xl sm:text-4xl">Die Firma</h2>
+            <h2 className="font-serif text-3xl sm:text-4xl">Herkunft und Anspruch</h2>
             <p className="mt-5 leading-relaxed text-navy-800/80">
-              Unabhängige Broker bewegen sich zwischen Mandanten, Gesellschaften
-              und Regulatorik. Informationen liegen oft verteilt – in Postfächern,
-              Tabellen und Insellösungen. Genau dort setzen wir an.
+              Broker Vision entstand aus über 20 Jahren Erfahrung in der
+              Versicherungsbranche und fundierter Praxis im Brokergeschäft. Aus der
+              Beobachtung, dass viele Brokerunternehmen dieselben Herausforderungen teilen –
+              und dass viele bestehende Systeme Daten verwalten, die tägliche Arbeit aber
+              oft nicht wirklich abnehmen.
             </p>
             <p className="mt-4 leading-relaxed text-navy-800/80">
-              Als Softwareunternehmen entwickeln wir digitale Werkzeuge, die
-              Überblick herstellen: über Bestände, Fristen, Dokumente und
-              Zusammenarbeit im Team. Nicht als Allzweckprodukt von der Stange,
-              sondern als klare, nachvollziehbare Lösung für den Brokeralltag.
+              Deshalb verbinden wir Branchenerfahrung mit Softwareentwicklung,
+              Digitalisierung und Automatisierung. Ziel ist ein digitaler Arbeitsplatz, der
+              Administration reduziert und Beratung stärkt.
             </p>
             <p className="mt-4 leading-relaxed text-navy-800/80">
-              Diese Website ist ein vorläufiges Grundgerüst. Inhalte, Angebote
-              und Referenzen werden schrittweise ergänzt.
+              «{site.tagline}»
             </p>
           </div>
           <aside className="lg:col-span-5">
-            <div className="rounded-2xl border border-navy-900/10 bg-white p-6 shadow-sm">
+            <div className="border border-navy-900/10 bg-white p-6">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold-500">
                 Kurzprofil
               </p>
               <dl className="mt-5 space-y-4 text-sm">
                 <div>
-                  <dt className="text-navy-800/55">Firma</dt>
+                  <dt className="text-navy-800/55">Unternehmen</dt>
                   <dd className="mt-1 font-medium text-navy-900">{site.legalName}</dd>
                 </div>
                 <div>
@@ -54,14 +54,16 @@ export default function AboutPage() {
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-navy-800/55">Tätigkeit</dt>
+                  <dt className="text-navy-800/55">Fokus</dt>
                   <dd className="mt-1 font-medium text-navy-900">
-                    IT-Dienstleistungen, Softwareentwicklung
+                    Digitaler Arbeitsplatz für Versicherungsbroker
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-navy-800/55">Geschäftsführung</dt>
-                  <dd className="mt-1 font-medium text-navy-900">{site.managingDirector}</dd>
+                  <dt className="text-navy-800/55">Kompetenzen</dt>
+                  <dd className="mt-1 font-medium text-navy-900">
+                    Brokergeschäft, Softwareentwicklung, Digitalisierung, Automatisierung
+                  </dd>
                 </div>
               </dl>
             </div>
@@ -71,10 +73,10 @@ export default function AboutPage() {
 
       <section className="bg-navy-50">
         <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
-          <h2 className="font-serif text-3xl sm:text-4xl">Haltung</h2>
+          <h2 className="font-serif text-3xl sm:text-4xl">Worauf wir setzen</h2>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {values.map((value) => (
-              <article key={value.title} className="rounded-2xl bg-white p-6">
+              <article key={value.title} className="bg-white p-6">
                 <h3 className="font-serif text-2xl">{value.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-navy-800/75">{value.text}</p>
               </article>
@@ -84,11 +86,11 @@ export default function AboutPage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-5 py-16 sm:px-8">
-        <div className="rounded-2xl bg-navy-900 px-6 py-10 text-white sm:px-10">
+        <div className="bg-navy-900 px-6 py-10 text-white sm:px-10">
           <h2 className="font-serif text-3xl">Nächster Schritt</h2>
           <p className="mt-3 max-w-2xl text-white/75">
-            Sie möchten prüfen, ob wir zu einem Vorhaben passen? Schreiben Sie uns –
-            unverbindlich und ohne Folienmarathon.
+            Sie möchten prüfen, wie die Plattform in Ihrem Haus wirken kann? Schreiben Sie
+            uns – wir freuen uns auf den Austausch.
           </p>
           <Link
             href="/kontakt/"

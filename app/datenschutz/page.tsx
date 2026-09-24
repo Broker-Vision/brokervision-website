@@ -12,7 +12,7 @@ export default function PrivacyPage() {
       <PageHero
         eyebrow="Rechtliches"
         title="Datenschutz"
-        lead="Kurzer Hinweis zum Umgang mit Daten auf dieser vorläufigen Website."
+        lead="Kurzer Hinweis zum Umgang mit Daten auf dieser Website."
       />
       <section className="mx-auto max-w-3xl space-y-6 px-5 py-16 text-navy-800/85 sm:px-8">
         <p>
