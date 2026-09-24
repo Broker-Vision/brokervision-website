@@ -5,6 +5,9 @@ export const brandColors = {
   paper: "#F7F5F0",
 } as const;
 
+/** Official selected mark id. */
+export const officialMarkId = "feld" as const;
+
 export function markColors(inverted: boolean) {
   return {
     primary: inverted ? brandColors.white : brandColors.navy,
@@ -44,8 +47,7 @@ export function openPeakPath(
 }
 
 /**
- * Final Weit refinements – subtle differences only.
- * Base reference: wide shallow First (Überblick).
+ * Weit refinements. Only `feld` is the official mark.
  */
 export const concepts = [
   {
@@ -53,6 +55,7 @@ export const concepts = [
     number: "01",
     name: "Horizont",
     direction: "Basis",
+    selected: false,
     summary:
       "Die ausgewogene Weit-Silhouette. Breite und Winkel im Gleichgewicht – Überblick als ruhige Leitform.",
   },
@@ -61,6 +64,7 @@ export const concepts = [
     number: "02",
     name: "Neigung",
     direction: "Winkel",
+    selected: false,
     summary:
       "Etwas steilerer First bei gleicher Spannweite. Mehr Führung in der Silhouette, ohne steil zu werden.",
   },
@@ -69,6 +73,7 @@ export const concepts = [
     number: "03",
     name: "Spannweite",
     direction: "Breite",
+    selected: false,
     summary:
       "Noch etwas breiter und flacher. Maximale Weite – Überblick und Vertrauen als dominante Geste.",
   },
@@ -77,6 +82,7 @@ export const concepts = [
     number: "04",
     name: "Linie",
     direction: "Goldakzent",
+    selected: false,
     summary:
       "Weit mit goldener Innenkante. Das Dach bleibt dominant; die Linie ordnet den Raum darunter.",
   },
@@ -85,6 +91,7 @@ export const concepts = [
     number: "05",
     name: "Feld",
     direction: "Innenraum",
+    selected: true,
     summary:
       "Weit mit goldener Fläche im Innenraum. Fachwissen, Prozesse und Technologie als ein Feld unter dem Dach.",
   },

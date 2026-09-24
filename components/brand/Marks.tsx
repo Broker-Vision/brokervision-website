@@ -110,12 +110,12 @@ export const markComponents = {
 } as const;
 
 type LockupProps = MarkProps & {
-  mark: keyof typeof markComponents;
+  mark?: keyof typeof markComponents;
 };
 
 /** Mark + wordmark for final selection. */
 export function LogoLockup({
-  mark,
+  mark = "feld",
   inverted = false,
   size = 40,
   className = "",

@@ -8,19 +8,22 @@ Vorläufige Firmenwebseite der **Broker Vision GmbH**, Aarau.
 - Über uns `/ueber-uns`
 - Lösungen `/loesungen`
 - Kontakt `/kontakt`
-- Marke `/marke` – fünf Logo-Konzepte zur Auswahl
+- Marke `/marke` – finale Marke Feld und verworfene Entwürfe
 - Impressum `/impressum`
 - Datenschutz `/datenschutz`
 
-## Logo-Konzepte
+## Logo
 
-Unter `public/brand/concepts/` liegen fünf finale Verfeinerungen von **Weit** (zur Logo-Auswahl):
+Offizielle Marke: Variante **Feld** (Weit mit goldenem Innenraum).
 
-1. Horizont – Basis
-2. Neigung – Winkel
-3. Spannweite – Breite
-4. Linie – Goldakzent
-5. Feld – Innenraum
+Dateien unter `public/brand/`:
+
+- `logo-mark.svg` / `logo-mark-inverted.svg`
+- `favicon-32.svg`
+- `app-icon.svg` / `apple-touch-icon.svg`
+- `og-image.png` – Open Graph / Social Preview
+
+Weitere Weit-Entwürfe bleiben unter `/marke` als verworfene Varianten dokumentiert.
 
 Farben: Dunkelblau `#0B1F3A`, Gold `#C9A45C`.
 
