@@ -3,6 +3,7 @@ import { Geist } from "next/font/google";
 import localFont from "next/font/local";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { fontInter, fontJakarta, fontManrope } from "@/lib/fonts";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -83,7 +84,7 @@ export default function RootLayout({
   return (
     <html lang="de-CH">
       <body
-        className={`${geistSans.variable} ${spaceGrotesk.variable} flex min-h-screen flex-col antialiased`}
+        className={`${geistSans.variable} ${spaceGrotesk.variable} ${fontInter.variable} ${fontManrope.variable} ${fontJakarta.variable} flex min-h-screen flex-col antialiased`}
       >
         <a
           href="#inhalt"

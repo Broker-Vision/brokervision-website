@@ -9,6 +9,7 @@ Firmenwebseite der **Broker Vision GmbH**, Aarau – der digitale Arbeitsplatz f
 - Über uns `/ueber-uns`
 - Kontakt `/kontakt`
 - Marke `/marke` – finale Marke Feld (nicht in der Hauptnavigation)
+- Typografie `/typografie` – Schriftvergleich Inter / Manrope / Plus Jakarta Sans
 - Impressum `/impressum`
 - Datenschutz `/datenschutz`
 
