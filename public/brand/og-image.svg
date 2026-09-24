@@ -1,0 +1,10 @@
+<svg viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#0B1F3A"/>
+  <g transform="translate(120 165) scale(3.75)">
+    <path fill="#C9A45C" d="M40 40 L56 56 L24 56 Z"/>
+    <path fill="#FFFFFF" d="M40 22 L76 56 L64 56 L40 33.33 L16 56 L4 56 Z"/>
+  </g>
+  <text x="460" y="300" fill="#FFFFFF" font-family="Inter, Helvetica, Arial, sans-serif" font-size="72" font-weight="600" letter-spacing="-1.5">Broker</text>
+  <text x="720" y="300" fill="#C9A45C" font-family="Inter, Helvetica, Arial, sans-serif" font-size="72" font-weight="600" letter-spacing="-1.5">Vision</text>
+  <text x="460" y="370" fill="rgba(255,255,255,0.65)" font-family="Inter, Helvetica, Arial, sans-serif" font-size="28">Digitale Klarheit für Broker</text>
+</svg>
