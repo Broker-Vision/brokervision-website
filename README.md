@@ -43,6 +43,13 @@ Farben: Dunkelblau `#0B1F3A`, Gold `#C9A45C`.
 - TypeScript
 - Tailwind CSS
 - Statischer Export (`output: "export"`) für Azure Static Web Apps
+- Kontakt-API vorbereitet unter `api/contact` (Azure Functions)
+
+### Kontaktformular (Vorbereitung)
+
+- Clientseitige Validierung, Honeypot und Zeitprüfung
+- Endpoint `/api/contact` ohne hinterlegte Produktiv-Secrets
+- Speicherung/Versand werden über Azure Application Settings aktiviert (`CONTACT_STORAGE_CONNECTION_STRING`, `CONTACT_NOTIFY_WEBHOOK_URL`)
 
 ## Lokal starten
 

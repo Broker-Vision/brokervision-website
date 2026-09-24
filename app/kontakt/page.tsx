@@ -14,7 +14,7 @@ export default function ContactPage() {
       <PageHero
         eyebrow="Kontakt"
         title="Wir sind erreichbar."
-        lead="Ob Einstieg in die Plattform oder konkrete Prozessfrage: Schreiben Sie uns. Wir antworten in der Regel innerhalb weniger Werktage."
+        lead="Ob Einstieg in die Plattform oder konkrete Prozessfrage: Schreiben Sie uns über das Formular oder per E-Mail. Wir antworten in der Regel innerhalb weniger Werktage."
       />
 
       <section className="mx-auto grid max-w-6xl gap-10 px-5 py-16 sm:px-8 lg:grid-cols-[1fr_1.15fr]">

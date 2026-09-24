@@ -1,0 +1,9 @@
+{
+  "name": "brokervision-contact-api",
+  "version": "1.0.0",
+  "description": "Azure Functions API for Broker Vision contact intake",
+  "main": "contact/index.js",
+  "engines": {
+    "node": ">=18"
+  }
+}
