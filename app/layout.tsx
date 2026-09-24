@@ -1,41 +1,13 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
-import localFont from "next/font/local";
+import { Inter } from "next/font/google";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { fontInter, fontJakarta, fontManrope } from "@/lib/fonts";
 import { site } from "@/lib/site";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-});
-
-const spaceGrotesk = localFont({
-  src: [
-    {
-      path: "../public/fonts/space-grotesk-latin-400-normal.woff2",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../public/fonts/space-grotesk-latin-500-normal.woff2",
-      weight: "500",
-      style: "normal",
-    },
-    {
-      path: "../public/fonts/space-grotesk-latin-600-normal.woff2",
-      weight: "600",
-      style: "normal",
-    },
-    {
-      path: "../public/fonts/space-grotesk-latin-700-normal.woff2",
-      weight: "700",
-      style: "normal",
-    },
-  ],
-  variable: "--font-space-grotesk",
   display: "swap",
 });
 
@@ -83,9 +55,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de-CH">
-      <body
-        className={`${geistSans.variable} ${spaceGrotesk.variable} ${fontInter.variable} ${fontManrope.variable} ${fontJakarta.variable} flex min-h-screen flex-col antialiased`}
-      >
+      <body className={`${inter.variable} flex min-h-screen flex-col antialiased`}>
         <a
           href="#inhalt"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:text-navy-900"

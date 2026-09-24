@@ -9,7 +9,6 @@ Firmenwebseite der **Broker Vision GmbH**, Aarau – der digitale Arbeitsplatz f
 - Über uns `/ueber-uns`
 - Kontakt `/kontakt`
 - Marke `/marke` – finale Marke Feld (nicht in der Hauptnavigation)
-- Typografie `/typografie` – Schriftvergleich Inter / Manrope / Plus Jakarta Sans
 - Impressum `/impressum`
 - Datenschutz `/datenschutz`
 
@@ -18,6 +17,12 @@ Firmenwebseite der **Broker Vision GmbH**, Aarau – der digitale Arbeitsplatz f
 Broker Vision entwickelt digitale Lösungen für Versicherungsbroker, Finanzberater und Beratungsunternehmen in der Schweiz.
 
 Leitsatz: **Menschen sollen beraten. Software soll arbeiten.**
+
+## Typografie
+
+Website-Schrift: **Inter** (Google Fonts).
+
+Logo und Wortmarke bleiben davon unabhängig und unverändert.
 
 ## Logo
 

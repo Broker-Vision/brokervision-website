@@ -23,8 +23,8 @@
   --color-gold-300: var(--gold-300);
   --color-cream: var(--cream);
   --color-paper: var(--paper);
-  --font-sans: var(--font-geist-sans);
-  --font-display: var(--font-space-grotesk);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-inter);
 }
 
 html {
@@ -34,8 +34,7 @@ html {
 body {
   background: var(--paper);
   color: var(--navy-900);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
-  font-feature-settings: "ss01" on, "cv11" on;
+  font-family: var(--font-inter), system-ui, sans-serif;
   letter-spacing: -0.011em;
 }
 
@@ -45,25 +44,9 @@ body {
 }
 
 .font-display {
-  font-family: var(--font-space-grotesk), var(--font-geist-sans), system-ui, sans-serif;
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  font-feature-settings: "ss01" on;
-}
-
-.font-candidate-inter {
   font-family: var(--font-inter), system-ui, sans-serif;
-  letter-spacing: -0.015em;
-}
-
-.font-candidate-manrope {
-  font-family: var(--font-manrope), system-ui, sans-serif;
-  letter-spacing: -0.02em;
-}
-
-.font-candidate-jakarta {
-  font-family: var(--font-jakarta), system-ui, sans-serif;
-  letter-spacing: -0.02em;
+  font-weight: 600;
+  letter-spacing: -0.025em;
 }
 
 .hairline {
