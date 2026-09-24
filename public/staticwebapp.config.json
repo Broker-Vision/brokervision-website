@@ -2,12 +2,7 @@
   "trailingSlash": "auto",
   "routes": [
     {
-      "route": "/loesungen",
-      "redirect": "/plattform",
-      "statusCode": 301
-    },
-    {
-      "route": "/loesungen/",
+      "route": "/loesungen*",
       "redirect": "/plattform/",
       "statusCode": 301
     }
