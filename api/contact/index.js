@@ -33,6 +33,21 @@ function corsHeaders() {
 async function publicConfig(req) {
   const siteKey = getTurnstileSiteKey();
   const probe = String(req?.query?.probe || "").toLowerCase();
+  const runProbe = Boolean(probe);
+
+  const base = {
+    ok: true,
+    turnstileSiteKey: siteKey,
+    turnstileRequired: Boolean(siteKey && (process.env.CONTACT_TURNSTILE_SECRET_KEY || process.env.TURNSTILE_SECRET_KEY)),
+    mailEnabled: isMailEnabled(),
+    storageConfigured: Boolean(getConnectionString()),
+  };
+
+  // Heavy probes only on explicit ?probe=… to keep normal form config fast.
+  if (!runProbe) {
+    return base;
+  }
+
   const probeSend = probe === "sendmail" || probe === "mail" || probe === "full";
   const [storage, graph] = await Promise.all([
     diagnoseStorage(),
@@ -86,11 +101,7 @@ async function publicConfig(req) {
   }
 
   return {
-    ok: true,
-    turnstileSiteKey: siteKey,
-    turnstileRequired: Boolean(siteKey && (process.env.CONTACT_TURNSTILE_SECRET_KEY || process.env.TURNSTILE_SECRET_KEY)),
-    mailEnabled: isMailEnabled(),
-    storageConfigured: Boolean(getConnectionString()),
+    ...base,
     diagnostics: {
       storage,
       graph,
