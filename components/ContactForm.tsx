@@ -148,13 +148,15 @@ export function ContactForm() {
       });
       resetTurnstile();
       update("turnstileToken", "");
-    } catch {
+    } catch (error) {
+      const detail = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
       setSubmit({
         status: "error",
         code: "NETWORK",
         message:
           "Die Verbindung zum Kontaktdienst ist fehlgeschlagen. Bitte versuchen Sie es erneut oder schreiben Sie an info@brokervision.ch.",
       });
+      console.error("Contact submit network error", detail);
       resetTurnstile();
       update("turnstileToken", "");
     }
