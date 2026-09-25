@@ -1,6 +1,6 @@
 import Link from "next/link";
+import { PlatformDemo } from "@/components/PlatformDemo";
 import {
-  actionSteps,
   benefits,
   challenges,
   platformModules,
@@ -48,10 +48,10 @@ export default function HomePage() {
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
-              href="/plattform/"
+              href="/#in-aktion"
               className="inline-flex items-center justify-center rounded-full bg-gold-400 px-6 py-3 text-sm font-medium text-navy-950 transition hover:bg-gold-300"
             >
-              Plattform entdecken
+              In Aktion sehen
             </Link>
             <Link
               href="/kontakt/"
@@ -99,6 +99,8 @@ export default function HomePage() {
           ))}
         </ul>
       </section>
+
+      <PlatformDemo />
 
       <section className="bg-navy-50">
         <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
@@ -173,59 +175,6 @@ export default function HomePage() {
               </p>
             </article>
           ))}
-        </div>
-      </section>
-
-      <section id="in-aktion" className="relative overflow-hidden bg-navy-950 text-white">
-        <div className="hero-grid pointer-events-none absolute inset-0 opacity-60" />
-        <div className="relative mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold-400">
-            Broker Vision in Aktion
-          </p>
-          <h2 className="font-display mt-3 max-w-2xl text-3xl sm:text-4xl">
-            Vom Dokument zur versandfertigen Ausschreibung.
-          </h2>
-          <p className="mt-4 max-w-2xl text-white/70">
-            So entlastet die Plattform den Alltag – Schritt für Schritt, nachvollziehbar
-            und unter Kontrolle des Brokers.
-          </p>
-
-          <div className="mt-10 grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-stretch">
-            <a
-              href="/kontakt/"
-              className="group relative flex min-h-[18rem] flex-col justify-between overflow-hidden rounded-2xl border border-white/15 bg-white/5 p-8 transition hover:border-gold-400/50 hover:bg-white/[0.07] sm:min-h-[22rem] sm:p-10"
-            >
-              <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-gold-400">
-                  Video / Demo
-                </p>
-                <p className="font-display mt-4 max-w-md text-2xl sm:text-3xl">
-                  Platzhalter für Demo und Produktvideo
-                </p>
-                <p className="mt-3 max-w-sm text-sm text-white/65">
-                  Hier zeigen wir später den Ablauf live. Bis dahin freuen wir uns über
-                  ein Gespräch zur Plattform.
-                </p>
-              </div>
-              <span className="mt-8 inline-flex h-14 w-14 items-center justify-center rounded-full border border-gold-400/60 text-gold-400 transition group-hover:bg-gold-400 group-hover:text-navy-950">
-                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden>
-                  <path d="M8 5.5v13l11-6.5-11-6.5Z" />
-                </svg>
-              </span>
-            </a>
-
-            <ol className="space-y-3">
-              {actionSteps.map((step, index) => (
-                <li
-                  key={step}
-                  className="flex items-start gap-4 rounded-xl border border-white/10 bg-white/5 px-4 py-3.5"
-                >
-                  <span className="font-display text-lg text-gold-400">0{index + 1}</span>
-                  <span className="pt-0.5 text-sm text-white/85">{step}</span>
-                </li>
-              ))}
-            </ol>
-          </div>
         </div>
       </section>
 

@@ -87,13 +87,13 @@ export default function PlatformPage() {
               In Aktion
             </p>
             <p className="font-display mt-3 text-2xl leading-snug">
-              Vom Upload zur Ausschreibung – ohne Medienbruch.
+              Vom Upload zur Ausschreibung – interaktiv in sechs Schritten.
             </p>
             <Link
               href="/#in-aktion"
               className="mt-6 inline-flex text-sm font-medium text-gold-300 underline underline-offset-4 hover:text-gold-400"
             >
-              Ablauf auf der Startseite ansehen
+              Interaktive Demo auf der Startseite
             </Link>
           </div>
         </div>

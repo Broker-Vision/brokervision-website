@@ -115,12 +115,12 @@ export const benefits = [
 ] as const;
 
 export const actionSteps = [
-  "Offerte oder Police hochladen",
-  "Dokument wird automatisch analysiert",
+  "Police hochladen",
+  "Dokument wird analysiert",
   "Daten werden erkannt",
-  "Formular wird automatisch vorbereitet",
-  "Ausschreibung wird erstellt",
-  "Broker prüft und versendet",
+  "Ausschreibung wird vorbereitet",
+  "Broker prüft die Angaben",
+  "Ausschreibung wird versendet",
 ] as const;
 
 export const values = [

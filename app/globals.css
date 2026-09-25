@@ -70,3 +70,69 @@ body {
 .vision-ring {
   border: 1px solid color-mix(in srgb, var(--gold-400) 35%, transparent);
 }
+
+@keyframes demo-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes demo-scan {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(14rem);
+    opacity: 0;
+  }
+}
+
+@keyframes demo-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--gold-400) 35%, transparent);
+  }
+  50% {
+    transform: scale(1.04);
+    box-shadow: 0 0 0 12px transparent;
+  }
+}
+
+@keyframes demo-hint {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.demo-fade {
+  animation: demo-fade-in 0.45s ease-out both;
+}
+
+.demo-scan {
+  animation: demo-scan 2.2s ease-in-out infinite;
+}
+
+.demo-pulse {
+  animation: demo-pulse 2s ease-in-out infinite;
+}
+
+.demo-hint {
+  animation: demo-hint 1.4s ease-in-out infinite;
+}
