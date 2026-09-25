@@ -15,50 +15,49 @@ export default function HomePage() {
         <div className="hero-grid pointer-events-none absolute inset-0" />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-24 top-10 hidden h-[28rem] w-[28rem] rounded-full vision-ring lg:block"
+          className="pointer-events-none absolute -left-24 top-20 h-72 w-72 rounded-full bg-gold-400/10 blur-3xl"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-8 top-28 hidden h-[20rem] w-[20rem] rounded-full vision-ring lg:block"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute right-24 top-48 hidden h-8 w-8 rounded-full bg-gold-400/80 lg:block"
+          className="pointer-events-none absolute -right-16 bottom-0 h-80 w-80 rounded-full bg-gold-400/10 blur-3xl"
         />
 
-        <div className="relative mx-auto max-w-6xl px-5 pb-20 pt-16 sm:px-8 sm:pt-24 lg:pb-24">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold-400">
-            Broker Vision · Digitaler Arbeitsplatz
-          </p>
-          <h1 className="font-display mt-5 max-w-3xl text-4xl leading-[1.12] sm:text-5xl lg:text-6xl">
-            {site.headline}
-          </h1>
-          <p className="mt-5 text-xl font-medium text-gold-300 sm:text-2xl">
-            {site.subheadline}
-          </p>
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg">
-            Broker Vision entwickelt digitale Lösungen für Versicherungsbroker,
-            Finanzberater und Beratungsunternehmen in der Schweiz. Entstanden aus
-            über 20 Jahren Erfahrung in der Versicherungsbranche und fundierter
-            Praxis im Brokergeschäft.
-          </p>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg">
-            Wir digitalisieren und vereinfachen Brokerprozesse, damit sich Menschen
-            auf Beratung statt Administration konzentrieren können.
-          </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/#in-aktion"
-              className="inline-flex items-center justify-center rounded-full bg-gold-400 px-6 py-3 text-sm font-medium text-navy-950 transition hover:bg-gold-300"
-            >
-              In Aktion sehen
-            </Link>
-            <Link
-              href="/kontakt/"
-              className="inline-flex items-center justify-center rounded-full border border-white/25 px-6 py-3 text-sm font-medium text-white transition hover:border-white hover:bg-white/5"
-            >
-              Gespräch vereinbaren
-            </Link>
+        <div className="relative mx-auto max-w-6xl px-5 pb-12 pt-10 sm:px-8 sm:pb-16 sm:pt-14 lg:pb-20 lg:pt-16">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold-400">
+              Broker Vision
+            </p>
+            <h1 className="font-display mt-4 text-3xl leading-[1.12] sm:text-5xl lg:text-[3.25rem]">
+              Diese Plattform spart Ihnen Arbeit.
+            </h1>
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg">
+              Police hochladen – Ausschreibung versenden. Automatisiert, nachvollziehbar,
+              unter Kontrolle des Brokers.
+            </p>
+            <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Link
+                href="/kontakt/"
+                className="inline-flex items-center justify-center rounded-full bg-gold-400 px-6 py-3 text-sm font-medium text-navy-950 transition hover:bg-gold-300"
+              >
+                Gespräch vereinbaren
+              </Link>
+              <Link
+                href="/plattform/"
+                className="inline-flex items-center justify-center rounded-full border border-white/25 px-6 py-3 text-sm font-medium text-white transition hover:border-white hover:bg-white/5"
+              >
+                Plattform entdecken
+              </Link>
+            </div>
+          </div>
+
+          <div className="mx-auto mt-8 max-w-5xl sm:mt-10">
+            <p className="mb-3 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-gold-400/90">
+              Broker Vision in Aktion
+            </p>
+            <PlatformDemo />
+            <p className="mt-3 text-center text-xs text-white/45">
+              Live-Demo ohne Login – läuft automatisch in Endlosschleife.
+            </p>
           </div>
         </div>
       </section>
@@ -99,8 +98,6 @@ export default function HomePage() {
           ))}
         </ul>
       </section>
-
-      <PlatformDemo />
 
       <section className="bg-navy-50">
         <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">

@@ -115,11 +115,12 @@ export const benefits = [
 ] as const;
 
 export const actionSteps = [
-  "Police hochladen",
-  "Dokument wird analysiert",
-  "Daten werden erkannt",
+  "Police wird hochgeladen",
+  "OCR analysiert das Dokument",
+  "Kunde wird erkannt",
+  "Gesellschaft wird erkannt",
+  "Relevante Daten werden übernommen",
   "Ausschreibung wird vorbereitet",
-  "Broker prüft die Angaben",
   "Ausschreibung wird versendet",
 ] as const;
 
