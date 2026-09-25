@@ -33,6 +33,9 @@ declare global {
 const SCRIPT_ID = "cf-turnstile-script";
 const SCRIPT_SRC = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
 
+/** Active widget id for safe reset after submit (must survive disabled=busy). */
+let activeWidgetId: string | null = null;
+
 function loadTurnstileScript(): Promise<void> {
   if (typeof window === "undefined") return Promise.resolve();
   if (window.turnstile) return Promise.resolve();
@@ -74,15 +77,20 @@ export function TurnstileWidget({
     callbacksRef.current = { onToken, onExpire, onError };
   }, [onToken, onExpire, onError]);
 
+  // Do NOT depend on `disabled`: toggling busy must not remove the widget.
+  // Removing it made resetTurnstile() throw after a successful API response,
+  // which the form catch mis-reported as NETWORK.
   useEffect(() => {
-    if (!siteKey || disabled) return;
+    if (!siteKey) return;
     let cancelled = false;
 
     loadTurnstileScript()
       .then(() => {
         if (cancelled || !containerRef.current || !window.turnstile) return;
         if (widgetIdRef.current) {
-          window.turnstile.remove(widgetIdRef.current);
+          const previousId = widgetIdRef.current;
+          window.turnstile.remove(previousId);
+          if (activeWidgetId === previousId) activeWidgetId = null;
           widgetIdRef.current = null;
         }
         widgetIdRef.current = window.turnstile.render(containerRef.current, {
@@ -92,6 +100,7 @@ export function TurnstileWidget({
           "expired-callback": () => callbacksRef.current.onExpire?.(),
           "error-callback": () => callbacksRef.current.onError?.(),
         });
+        activeWidgetId = widgetIdRef.current;
       })
       .catch(() => {
         callbacksRef.current.onError?.();
@@ -100,17 +109,40 @@ export function TurnstileWidget({
     return () => {
       cancelled = true;
       if (widgetIdRef.current && window.turnstile) {
-        window.turnstile.remove(widgetIdRef.current);
+        try {
+          window.turnstile.remove(widgetIdRef.current);
+        } catch {
+          // ignore teardown errors
+        }
+        if (activeWidgetId === widgetIdRef.current) activeWidgetId = null;
         widgetIdRef.current = null;
       }
     };
-  }, [siteKey, disabled]);
+  }, [siteKey]);
 
-  return <div ref={containerRef} className="cf-turnstile" />;
+  return (
+    <div
+      ref={containerRef}
+      className="cf-turnstile"
+      aria-disabled={disabled}
+      style={{
+        pointerEvents: disabled ? "none" : undefined,
+        opacity: disabled ? 0.65 : undefined,
+      }}
+    />
+  );
 }
 
+/** Safe reset – never throws (widget may already be gone after unmount). */
 export function resetTurnstile() {
-  if (typeof window !== "undefined" && window.turnstile) {
-    window.turnstile.reset();
+  if (typeof window === "undefined" || !window.turnstile) return;
+  try {
+    if (activeWidgetId) {
+      window.turnstile.reset(activeWidgetId);
+    } else {
+      window.turnstile.reset();
+    }
+  } catch {
+    // Cloudflare throws if the widget was already removed; ignore.
   }
 }

@@ -98,6 +98,7 @@ export function ContactForm() {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(validation.data),
+        credentials: "same-origin",
       });
 
       let payload: { code?: string; message?: string; ok?: boolean; id?: string } = {};
@@ -108,9 +109,11 @@ export function ContactForm() {
       }
 
       if (response.ok && payload.ok) {
+        // Success UI unmounts the form (and Turnstile). Do not call resetTurnstile()
+        // here: after busy=true the widget used to be removed, and reset() then threw,
+        // which this catch mis-labelled as NETWORK despite a successful API response.
         setSubmit({ status: "success", id: payload.id });
         setValues(emptyContactForm());
-        resetTurnstile();
         setTurnstileReady(false);
         return;
       }
@@ -125,6 +128,7 @@ export function ContactForm() {
         });
         resetTurnstile();
         update("turnstileToken", "");
+        setTurnstileReady(false);
         return;
       }
 
@@ -134,6 +138,7 @@ export function ContactForm() {
           setFieldErrors({ turnstileToken: payload.message || "Sicherheitsprüfung fehlgeschlagen." });
           resetTurnstile();
           update("turnstileToken", "");
+          setTurnstileReady(false);
         }
         setFormError(payload.message || "Bitte prüfen Sie Ihre Angaben.");
         return;
@@ -148,6 +153,7 @@ export function ContactForm() {
       });
       resetTurnstile();
       update("turnstileToken", "");
+      setTurnstileReady(false);
     } catch (error) {
       const detail = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
       setSubmit({
@@ -159,6 +165,7 @@ export function ContactForm() {
       console.error("Contact submit network error", detail);
       resetTurnstile();
       update("turnstileToken", "");
+      setTurnstileReady(false);
     }
   }
 
