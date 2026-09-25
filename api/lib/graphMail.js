@@ -76,10 +76,12 @@ function isMailEnabled() {
 }
 
 /**
- * Probe Graph client-credentials auth (no mail send).
- * Safe for public diagnostics: returns AAD error text, never secrets.
+ * Probe Graph client-credentials auth.
+ * Safe for public diagnostics: returns AAD/Graph error text, never secrets.
+ * Set probeSend=true to also call users/{from}/sendMail once.
  */
-async function diagnoseGraph() {
+async function diagnoseGraph(options = {}) {
+  const probeSend = Boolean(options.probeSend);
   const enabled = isMailEnabled();
   const { tenantId, clientId, clientSecret, mailFrom, mailTo } = graphEnv();
   const base = {
@@ -108,7 +110,58 @@ async function diagnoseGraph() {
     };
   }
 
-  return { ...base, ok: true, code: "GRAPH_TOKEN_OK" };
+  if (!probeSend) {
+    return { ...base, ok: true, code: "GRAPH_TOKEN_OK" };
+  }
+
+  const payload = {
+    message: {
+      subject: "Broker Vision Kontakt-API Diagnose (sendMail-Probe)",
+      body: {
+        contentType: "Text",
+        content:
+          "Automatische Diagnose von GET /api/contact?probe=sendMail. Diese Nachricht kann gelöscht werden.",
+      },
+      toRecipients: [{ emailAddress: { address: mailTo } }],
+    },
+    saveToSentItems: false,
+  };
+
+  let response;
+  try {
+    response = await fetchWithTimeout(
+      `https://graph.microsoft.com/v1.0/users/${encodeURIComponent(mailFrom)}/sendMail`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${tokenResult.accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      },
+      GRAPH_TIMEOUT_MS,
+    );
+  } catch (error) {
+    return {
+      ...base,
+      ok: false,
+      code: "GRAPH_SEND_TIMEOUT",
+      detail: error?.name === "AbortError" ? `aborted after ${GRAPH_TIMEOUT_MS}ms` : String(error?.message || error),
+    };
+  }
+
+  if (!response.ok) {
+    const detail = await readBodyPreview(response);
+    return {
+      ...base,
+      ok: false,
+      code: "GRAPH_SEND_FAILED",
+      status: response.status,
+      detail,
+    };
+  }
+
+  return { ...base, ok: true, code: "GRAPH_SEND_OK" };
 }
 
 /**

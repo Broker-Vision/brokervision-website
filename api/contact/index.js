@@ -30,9 +30,14 @@ function corsHeaders() {
   };
 }
 
-async function publicConfig() {
+async function publicConfig(req) {
   const siteKey = getTurnstileSiteKey();
-  const [storage, graph] = await Promise.all([diagnoseStorage(), diagnoseGraph()]);
+  const probe = String(req?.query?.probe || "").toLowerCase();
+  const probeSend = probe === "sendmail" || probe === "mail";
+  const [storage, graph] = await Promise.all([
+    diagnoseStorage(),
+    diagnoseGraph({ probeSend }),
+  ]);
   return {
     ok: true,
     turnstileSiteKey: siteKey,
@@ -54,7 +59,7 @@ module.exports = async function (context, req) {
     }
 
     if (req.method === "GET") {
-      const config = await publicConfig();
+      const config = await publicConfig(req);
       json(context, 200, config, corsHeaders());
       return;
     }
