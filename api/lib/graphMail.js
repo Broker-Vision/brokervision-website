@@ -9,12 +9,21 @@ const { fetchWithTimeout, readBodyPreview } = require("./http");
 const GRAPH_TIMEOUT_MS = Number(process.env.GRAPH_TIMEOUT_MS || 12000);
 
 function graphEnv() {
+  const mailFrom =
+    process.env.GRAPH_MAIL_FROM || process.env.CONTACT_MAIL_FROM || "info@brokervision.ch";
+  const configuredTo = (process.env.GRAPH_MAIL_TO || process.env.CONTACT_MAIL_TO || "").trim();
+  // Hauptpostfach: chris@. Legacy info→info (Default oder alte App Setting) umleiten.
+  const mailTo =
+    !configuredTo || configuredTo.toLowerCase() === "info@brokervision.ch"
+      ? "chris@brokervision.ch"
+      : configuredTo;
+
   return {
     tenantId: process.env.GRAPH_TENANT_ID || "",
     clientId: process.env.GRAPH_CLIENT_ID || "",
     clientSecret: process.env.GRAPH_CLIENT_SECRET || "",
-    mailFrom: process.env.GRAPH_MAIL_FROM || process.env.CONTACT_MAIL_FROM || "info@brokervision.ch",
-    mailTo: process.env.GRAPH_MAIL_TO || process.env.CONTACT_MAIL_TO || "info@brokervision.ch",
+    mailFrom,
+    mailTo,
   };
 }
 

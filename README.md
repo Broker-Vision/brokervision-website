@@ -50,7 +50,7 @@ Farben: Dunkelblau `#0B1F3A`, Gold `#C9A45C`.
 - Cloudflare Turnstile (Client + serverseitige Prüfung)
 - Azure Function `POST /api/contact` mit Validierung und Rate-Limiting
 - Speicherung in Azure Table Storage
-- Microsoft Graph Mail an `info@brokervision.ch` (aktivierbar via `CONTACT_MAIL_ENABLED=true`)
+- Microsoft Graph Mail an `chris@brokervision.ch` (aktivierbar via `CONTACT_MAIL_ENABLED=true`)
 - Kein SMTP, keine provisorischen Mailversender
 - Setup: `docs/contact-api.md` und `.env.example`
 

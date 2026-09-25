@@ -8,7 +8,7 @@ Browser (Turnstile)
     → Cloudflare Turnstile siteverify
     → Validierung + Rate-Limit
     → Azure Table Storage (ContactInquiries)
-    → optional: Microsoft Graph sendMail → info@brokervision.ch
+    → optional: Microsoft Graph sendMail → chris@brokervision.ch
 ```
 
 Kein SMTP. Keine Drittanbieter-Mailrelay. Mailversand nur über Microsoft Graph.
@@ -27,8 +27,8 @@ Kein SMTP. Keine Drittanbieter-Mailrelay. Mailversand nur über Microsoft Graph.
 | `GRAPH_TENANT_ID` | Entra ID Tenant |
 | `GRAPH_CLIENT_ID` | App Registration Client ID |
 | `GRAPH_CLIENT_SECRET` | App Registration Secret |
-| `GRAPH_MAIL_FROM` | Absender-Mailbox (z. B. info@brokervision.ch) |
-| `GRAPH_MAIL_TO` | Empfänger (z. B. info@brokervision.ch) |
+| `GRAPH_MAIL_FROM` | Absender-Mailbox (`info@brokervision.ch`) |
+| `GRAPH_MAIL_TO` | Empfänger (`chris@brokervision.ch`) |
 
 ## Microsoft Graph vorbereiten
 
