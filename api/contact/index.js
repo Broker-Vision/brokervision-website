@@ -33,11 +33,58 @@ function corsHeaders() {
 async function publicConfig(req) {
   const siteKey = getTurnstileSiteKey();
   const probe = String(req?.query?.probe || "").toLowerCase();
-  const probeSend = probe === "sendmail" || probe === "mail";
+  const probeSend = probe === "sendmail" || probe === "mail" || probe === "full";
   const [storage, graph] = await Promise.all([
     diagnoseStorage(),
     diagnoseGraph({ probeSend }),
   ]);
+
+  let full = null;
+  if (probe === "full") {
+    const inquiry = {
+      id: crypto.randomUUID(),
+      receivedAt: new Date().toISOString(),
+      name: "Diagnose Probe",
+      company: "Broker Vision",
+      email: "diagnose@brokervision.ch",
+      phone: "",
+      interest: "Allgemeine Anfrage",
+      message: "Automatische Full-Probe von GET /api/contact?probe=full (kein Turnstile).",
+      source: "website-contact-diagnose",
+      status: "new",
+      mailStatus: "pending",
+      clientIpHash: hashIp("diagnose"),
+    };
+    try {
+      const stored = await saveInquiry(inquiry);
+      if (!stored.ok) {
+        full = { ok: false, stage: "storage", code: stored.code || "STORAGE_FAILED" };
+      } else {
+        const mail = await sendGraphNotification(inquiry);
+        full = {
+          ok: Boolean(mail.ok || mail.skipped),
+          stage: "complete",
+          id: inquiry.id,
+          storage: stored,
+          mail: {
+            ok: mail.ok || false,
+            skipped: mail.skipped || false,
+            code: mail.code || (mail.ok ? "GRAPH_SEND_OK" : mail.skipped ? "MAIL_DISABLED" : "GRAPH_SEND_FAILED"),
+            status: mail.status || null,
+            detail: mail.detail || null,
+          },
+        };
+      }
+    } catch (error) {
+      full = {
+        ok: false,
+        stage: "exception",
+        code: "FULL_PROBE_EXCEPTION",
+        detail: String(error?.message || error),
+      };
+    }
+  }
+
   return {
     ok: true,
     turnstileSiteKey: siteKey,
@@ -47,6 +94,7 @@ async function publicConfig(req) {
     diagnostics: {
       storage,
       graph,
+      ...(full ? { full } : {}),
     },
   };
 }
