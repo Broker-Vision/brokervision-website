@@ -3,6 +3,8 @@
  * Docs: https://developers.cloudflare.com/turnstile/
  */
 
+const { fetchWithTimeout } = require("./http");
+
 async function verifyTurnstile(token, remoteIp) {
   const secret = process.env.CONTACT_TURNSTILE_SECRET_KEY || process.env.TURNSTILE_SECRET_KEY;
   if (!secret) {
@@ -17,11 +19,25 @@ async function verifyTurnstile(token, remoteIp) {
   form.set("response", token);
   if (remoteIp) form.set("remoteip", remoteIp);
 
-  const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: form.toString(),
-  });
+  let response;
+  try {
+    response = await fetchWithTimeout(
+      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: form.toString(),
+      },
+      Number(process.env.TURNSTILE_TIMEOUT_MS || 10000),
+    );
+  } catch (error) {
+    return {
+      ok: false,
+      code: "TURNSTILE_UNAVAILABLE",
+      message: "Sicherheitsprüfung vorübergehend nicht erreichbar.",
+      detail: String(error?.message || error),
+    };
+  }
 
   if (!response.ok) {
     return {

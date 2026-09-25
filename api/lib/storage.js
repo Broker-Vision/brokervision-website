@@ -25,6 +25,18 @@ function createTableClient() {
   return TableClient.fromConnectionString(connectionString, getTableName());
 }
 
+function withTimeout(promise, timeoutMs, label) {
+  let timer;
+  const timeout = new Promise((_, reject) => {
+    timer = setTimeout(() => {
+      const error = new Error(`${label} timed out after ${timeoutMs}ms`);
+      error.code = "TIMEOUT";
+      reject(error);
+    }, timeoutMs);
+  });
+  return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
+}
+
 /**
  * Persist a contact inquiry in Azure Table Storage.
  * Creates the table if it does not exist.
@@ -35,9 +47,15 @@ async function saveInquiry(inquiry) {
     return { ok: false, code: "STORAGE_NOT_CONFIGURED" };
   }
 
-  await client.createTable().catch((error) => {
-    if (error?.statusCode !== 409) throw error;
-  });
+  const timeoutMs = Number(process.env.CONTACT_STORAGE_TIMEOUT_MS || 10000);
+
+  await withTimeout(
+    client.createTable().catch((error) => {
+      if (error?.statusCode !== 409) throw error;
+    }),
+    timeoutMs,
+    "createTable",
+  );
 
   const received = new Date(inquiry.receivedAt || Date.now());
   const partitionKey = `${received.getUTCFullYear()}-${String(received.getUTCMonth() + 1).padStart(2, "0")}`;
@@ -60,7 +78,7 @@ async function saveInquiry(inquiry) {
     turnstileOk: true,
   };
 
-  await client.createEntity(entity);
+  await withTimeout(client.createEntity(entity), timeoutMs, "createEntity");
   return { ok: true, partitionKey, rowKey };
 }
 
@@ -71,34 +89,100 @@ async function bumpRateLimit(ipHash, windowMs) {
   const client = createTableClient();
   if (!client || !ipHash) return { ok: false };
 
-  await client.createTable().catch((error) => {
-    if (error?.statusCode !== 409) throw error;
-  });
+  const timeoutMs = Number(process.env.CONTACT_STORAGE_TIMEOUT_MS || 10000);
+
+  await withTimeout(
+    client.createTable().catch((error) => {
+      if (error?.statusCode !== 409) throw error;
+    }),
+    timeoutMs,
+    "createTable",
+  );
 
   const windowId = Math.floor(Date.now() / windowMs);
   const partitionKey = "ratelimit";
   const rowKey = `${ipHash}:${windowId}`;
 
   try {
-    const existing = await client.getEntity(partitionKey, rowKey);
+    const existing = await withTimeout(client.getEntity(partitionKey, rowKey), timeoutMs, "getEntity");
     const count = Number(existing.count || 0) + 1;
-    await client.updateEntity(
-      { partitionKey, rowKey, count, updatedAt: new Date().toISOString() },
-      "Merge",
+    await withTimeout(
+      client.updateEntity(
+        { partitionKey, rowKey, count, updatedAt: new Date().toISOString() },
+        "Merge",
+      ),
+      timeoutMs,
+      "updateEntity",
     );
     return { ok: true, count };
   } catch (error) {
     if (error?.statusCode === 404) {
-      await client.createEntity({
-        partitionKey,
-        rowKey,
-        count: 1,
-        updatedAt: new Date().toISOString(),
-      });
+      await withTimeout(
+        client.createEntity({
+          partitionKey,
+          rowKey,
+          count: 1,
+          updatedAt: new Date().toISOString(),
+        }),
+        timeoutMs,
+        "createEntity",
+      );
       return { ok: true, count: 1 };
     }
     throw error;
   }
 }
 
-module.exports = { saveInquiry, bumpRateLimit, hashIp, getConnectionString };
+/**
+ * Probe table storage connectivity without writing inquiry data.
+ */
+async function diagnoseStorage() {
+  const connectionString = getConnectionString();
+  const tableName = getTableName();
+  const base = {
+    configured: Boolean(connectionString),
+    tableName,
+    source: process.env.CONTACT_STORAGE_CONNECTION_STRING
+      ? "CONTACT_STORAGE_CONNECTION_STRING"
+      : process.env.AzureWebJobsStorage
+        ? "AzureWebJobsStorage"
+        : "none",
+  };
+
+  if (!connectionString) {
+    return { ...base, ok: false, code: "STORAGE_NOT_CONFIGURED" };
+  }
+
+  const client = TableClient.fromConnectionString(connectionString, tableName);
+  const timeoutMs = Number(process.env.CONTACT_STORAGE_TIMEOUT_MS || 10000);
+
+  try {
+    await withTimeout(
+      client.createTable().catch((error) => {
+        if (error?.statusCode !== 409) throw error;
+      }),
+      timeoutMs,
+      "createTable",
+    );
+    // Lightweight read that succeeds even on empty table.
+    const iter = client.listEntities({ queryOptions: { top: 1 } });
+    await withTimeout(iter.next(), timeoutMs, "listEntities");
+    return { ...base, ok: true, code: "STORAGE_OK" };
+  } catch (error) {
+    return {
+      ...base,
+      ok: false,
+      code: error?.code === "TIMEOUT" ? "STORAGE_TIMEOUT" : "STORAGE_FAILED",
+      status: error?.statusCode || null,
+      detail: String(error?.message || error),
+    };
+  }
+}
+
+module.exports = {
+  saveInquiry,
+  bumpRateLimit,
+  hashIp,
+  getConnectionString,
+  diagnoseStorage,
+};
