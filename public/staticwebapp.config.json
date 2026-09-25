@@ -5,8 +5,18 @@
       "route": "/loesungen*",
       "redirect": "/plattform/",
       "statusCode": 301
+    },
+    {
+      "route": "/api/*",
+      "allowedRoles": ["anonymous"]
     }
   ],
+  "globalHeaders": {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Accept",
+    "Access-Control-Max-Age": "86400"
+  },
   "responseOverrides": {
     "404": {
       "rewrite": "/404.html"
