@@ -15,10 +15,10 @@ export default function ImprintPage() {
         title="Impressum"
         lead="Transparente Angaben zur Betreiberin dieser Website gemäss Schweizer Recht."
       />
-      <section className="mx-auto max-w-3xl px-5 py-16 sm:px-8">
-        <div className="space-y-10 text-navy-800/85">
+      <section className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
+        <div className="max-w-3xl space-y-12 text-navy-800/85">
           <div>
-            <h2 className="font-display text-2xl text-navy-900">Anbieterin</h2>
+            <h2 className="font-display text-2xl text-navy-900 sm:text-3xl">Anbieterin</h2>
             <p className="mt-4 leading-relaxed">
               <strong className="text-navy-900">{site.legalName}</strong>
               <br />
@@ -31,8 +31,8 @@ export default function ImprintPage() {
           </div>
 
           <div>
-            <h2 className="font-display text-2xl text-navy-900">Kontakt</h2>
-            <dl className="mt-4 space-y-3 text-sm">
+            <h2 className="font-display text-2xl text-navy-900 sm:text-3xl">Kontakt</h2>
+            <dl className="mt-4 space-y-4 text-sm">
               <div>
                 <dt className="text-navy-800/55">E-Mail</dt>
                 <dd className="mt-1">
@@ -59,8 +59,8 @@ export default function ImprintPage() {
           </div>
 
           <div>
-            <h2 className="font-display text-2xl text-navy-900">Handelsregister & UID</h2>
-            <dl className="mt-4 space-y-3 text-sm">
+            <h2 className="font-display text-2xl text-navy-900 sm:text-3xl">Handelsregister & UID</h2>
+            <dl className="mt-4 space-y-4 text-sm">
               <div>
                 <dt className="text-navy-800/55">Unternehmens-Identifikationsnummer (UID)</dt>
                 <dd className="mt-1 font-medium text-navy-900">{site.uid}</dd>
@@ -83,7 +83,7 @@ export default function ImprintPage() {
           </div>
 
           <div>
-            <h2 className="font-display text-2xl text-navy-900">Inhaltliche Verantwortung</h2>
+            <h2 className="font-display text-2xl text-navy-900 sm:text-3xl">Inhaltliche Verantwortung</h2>
             <p className="mt-4 leading-relaxed">
               Für den Inhalt dieser Website ist {site.legalName} verantwortlich. Wir
               bemühen uns um korrekte und aktuelle Informationen. Trotz sorgfältiger
@@ -93,7 +93,7 @@ export default function ImprintPage() {
           </div>
 
           <div>
-            <h2 className="font-display text-2xl text-navy-900">Haftungshinweis</h2>
+            <h2 className="font-display text-2xl text-navy-900 sm:text-3xl">Haftungshinweis</h2>
             <p className="mt-4 leading-relaxed">
               Externe Links führen zu Inhalten Dritter. Für diese Inhalte sind die
               jeweiligen Betreiber verantwortlich. Sollten Sie auf problematische Inhalte
