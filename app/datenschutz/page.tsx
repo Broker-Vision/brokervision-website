@@ -125,12 +125,17 @@ export default function PrivacyPage() {
                 den geschäftlichen Kontakt zu führen.
               </p>
               <p>
-                Das Formular enthält technische Massnahmen zur Spam-Reduktion (u. a.
-                Honeypot-Feld und Zeitprüfung). Die Architektur sieht vor, Anfragen an eine
-                Azure-Function zu übergeben, optional in Azure Storage zu speichern und
-                per E-Mail/Notification weiterzuleiten. Produktive Zugangsdaten sind
-                derzeit nicht hinterlegt; bis zur Aktivierung kann die Übermittlung über
-                einen E-Mail-Fallback erfolgen.
+                Das Formular wird serverseitig über eine Azure Function verarbeitet. Zum
+                Schutz vor Missbrauch setzen wir Cloudflare Turnstile sowie technische
+                Zusatzprüfungen (u. a. Honeypot und Zeitprüfung) ein. Anfragen werden in
+                Azure Storage (Table Storage) gespeichert. Der E-Mail-Versand an{" "}
+                {site.email} ist über Microsoft Graph / Microsoft 365 vorbereitet und wird
+                aktiviert, sobald die entsprechende Konfiguration hinterlegt ist. Es wird
+                kein SMTP-Dienst und kein provisorischer Mailversender eingesetzt.
+              </p>
+              <p>
+                Bei Cloudflare Turnstile können technisch notwendige Daten an Cloudflare
+                übermittelt werden, um die Sicherheitsprüfung durchzuführen.
               </p>
               <p>
                 Mit dem Absenden bestätigen Sie, dass Sie unsere Hinweise zum Datenschutz
@@ -144,8 +149,9 @@ export default function PrivacyPage() {
             <p className="mt-4 leading-relaxed">
               Wenn Sie uns per E-Mail kontaktieren oder wir Ihre Formularanfrage
               beantworten, bearbeiten wir die dabei übermittelten Personendaten zur
-              Korrespondenz und Nachverfolgung. E-Mails können über geschäftliche
-              Postfächer und unterstützende Cloud-Dienste verarbeitet werden.
+              Korrespondenz und Nachverfolgung. Benachrichtigungen aus dem
+              Kontaktformular können über Microsoft Graph an unser Microsoft-365-Postfach
+              zugestellt werden.
             </p>
           </section>
 
@@ -154,7 +160,8 @@ export default function PrivacyPage() {
             <p className="mt-4 leading-relaxed">
               Diese Website setzt keine Tracking-Cookies und keine Analyse-Tools von
               Drittanbietern zu Werbe- oder Profilierungszwecken ein. Technisch notwendige
-              Mechanismen des Hostings bleiben davon unberührt.
+              Mechanismen des Hostings sowie der Sicherheitsprüfung (Cloudflare Turnstile)
+              bleiben davon unberührt.
             </p>
           </section>
 

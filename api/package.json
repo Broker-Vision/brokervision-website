@@ -1,9 +1,12 @@
 {
   "name": "brokervision-contact-api",
   "version": "1.0.0",
-  "description": "Azure Functions API for Broker Vision contact intake",
+  "description": "Azure Functions API for Broker Vision contact intake (Turnstile, Table Storage, Microsoft Graph)",
   "main": "contact/index.js",
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "@azure/data-tables": "^13.3.0"
   }
 }

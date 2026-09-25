@@ -45,11 +45,14 @@ Farben: Dunkelblau `#0B1F3A`, Gold `#C9A45C`.
 - Statischer Export (`output: "export"`) für Azure Static Web Apps
 - Kontakt-API vorbereitet unter `api/contact` (Azure Functions)
 
-### Kontaktformular (Vorbereitung)
+### Kontaktformular (produktiv vorbereitet)
 
-- Clientseitige Validierung, Honeypot und Zeitprüfung
-- Endpoint `/api/contact` ohne hinterlegte Produktiv-Secrets
-- Speicherung/Versand werden über Azure Application Settings aktiviert (`CONTACT_STORAGE_CONNECTION_STRING`, `CONTACT_NOTIFY_WEBHOOK_URL`)
+- Cloudflare Turnstile (Client + serverseitige Prüfung)
+- Azure Function `POST /api/contact` mit Validierung und Rate-Limiting
+- Speicherung in Azure Table Storage
+- Microsoft Graph Mail an `info@brokervision.ch` (aktivierbar via `CONTACT_MAIL_ENABLED=true`)
+- Kein SMTP, keine provisorischen Mailversender
+- Setup: `docs/contact-api.md` und `.env.example`
 
 ## Lokal starten
 

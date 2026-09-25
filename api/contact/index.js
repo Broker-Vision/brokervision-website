@@ -1,130 +1,200 @@
 /**
- * Contact intake for Broker Vision (Azure Static Web Apps Functions).
- *
- * Prepared for:
- * - validation & spam checks
- * - optional Azure Storage persistence (env: CONTACT_STORAGE_CONNECTION_STRING)
- * - optional e-mail notification (env: CONTACT_NOTIFY_WEBHOOK_URL)
- *
- * No production secrets are committed. Without configuration the API returns
- * HTTP 501 with code NOT_CONFIGURED so the website can fall back gracefully.
+ * Broker Vision contact API
+ * Azure Functions + Cloudflare Turnstile + Azure Table Storage + Microsoft Graph mail (optional).
  */
 
-const INTERESTS = [
-  "Allgemeine Anfrage",
-  "Plattform-Übersicht",
-  "Offerten & Dokumentenanalyse",
-  "Workflow-Automatisierung",
-  "CRM & Dokumentenmanagement",
-  "Sicherheit & Cloud",
-];
+const { validateContactBody } = require("../lib/validate");
+const { verifyTurnstile, getTurnstileSiteKey } = require("../lib/turnstile");
+const { saveInquiry, bumpRateLimit, hashIp, getConnectionString } = require("../lib/storage");
+const { sendGraphNotification, isMailEnabled } = require("../lib/graphMail");
+const { checkRateLimit, getClientIp } = require("../lib/rateLimit");
+const crypto = require("crypto");
 
-const MIN_FILL_MS = 2500;
-const MAX_MESSAGE = 5000;
-
-function json(context, status, body) {
+function json(context, status, body, extraHeaders = {}) {
   context.res = {
     status,
     headers: {
       "Content-Type": "application/json",
       "Cache-Control": "no-store",
+      ...extraHeaders,
     },
     body,
   };
 }
 
-function validate(body) {
-  const name = String(body?.name || "").trim();
-  const company = String(body?.company || "").trim();
-  const email = String(body?.email || "").trim().toLowerCase();
-  const phone = String(body?.phone || "").trim();
-  const interest = String(body?.interest || "").trim();
-  const message = String(body?.message || "").trim();
-  const website = String(body?.website || "").trim();
-  const openedAt = Number(body?.openedAt || 0);
-  const privacyAccepted = Boolean(body?.privacyAccepted);
-
-  if (website) return { spam: true };
-  if (!openedAt || Date.now() - openedAt < MIN_FILL_MS) return { spam: true };
-
-  if (!name || name.length > 120) return { error: "Ungültiger Name." };
-  if (company.length > 160) return { error: "Ungültiges Unternehmen." };
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return { error: "Ungültige E-Mail-Adresse." };
-  }
-  if (phone.length > 40) return { error: "Ungültige Telefonnummer." };
-  if (!INTERESTS.includes(interest)) return { error: "Ungültiges Thema." };
-  if (!message || message.length < 10 || message.length > MAX_MESSAGE) {
-    return { error: "Ungültige Nachricht." };
-  }
-  if (!privacyAccepted) return { error: "Datenschutzhinweis nicht bestätigt." };
-
+function corsHeaders() {
   return {
-    data: {
-      name,
-      company,
-      email,
-      phone,
-      interest,
-      message,
-      privacyAccepted: true,
-      source: "website-contact",
-    },
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+  };
+}
+
+function publicConfig() {
+  const siteKey = getTurnstileSiteKey();
+  return {
+    ok: true,
+    turnstileSiteKey: siteKey,
+    turnstileRequired: Boolean(siteKey && (process.env.CONTACT_TURNSTILE_SECRET_KEY || process.env.TURNSTILE_SECRET_KEY)),
+    mailEnabled: isMailEnabled(),
+    storageConfigured: Boolean(getConnectionString()),
   };
 }
 
 module.exports = async function (context, req) {
   if (req.method === "OPTIONS") {
-    context.res = {
-      status: 204,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type",
-      },
-    };
+    context.res = { status: 204, headers: corsHeaders() };
     return;
   }
 
-  const result = validate(req.body || {});
+  if (req.method === "GET") {
+    json(context, 200, publicConfig(), corsHeaders());
+    return;
+  }
+
+  const ip = getClientIp(req);
+  const rate = checkRateLimit(ip);
+  if (!rate.ok) {
+    json(
+      context,
+      429,
+      {
+        ok: false,
+        code: "RATE_LIMITED",
+        message: "Zu viele Anfragen. Bitte warten Sie einen Moment und versuchen Sie es erneut.",
+      },
+      { ...corsHeaders(), "Retry-After": String(rate.retryAfterSec || 60) },
+    );
+    return;
+  }
+
+  // Best-effort durable counter (does not block request if storage is down).
+  try {
+    await bumpRateLimit(hashIp(ip), rate.windowMs);
+  } catch (error) {
+    context.log.warn("Rate limit table bump failed", error?.message || error);
+  }
+
+  const result = validateContactBody(req.body || {});
   if (result.spam) {
-    // Silent acceptance for bots – no storage, no e-mail.
-    json(context, 200, { ok: true });
+    json(context, 200, { ok: true }, corsHeaders());
     return;
   }
   if (result.error) {
-    json(context, 400, { ok: false, message: result.error });
+    json(context, 400, { ok: false, code: "VALIDATION_ERROR", message: result.error }, corsHeaders());
     return;
   }
 
-  const storageConfigured = Boolean(process.env.CONTACT_STORAGE_CONNECTION_STRING);
-  const notifyConfigured = Boolean(process.env.CONTACT_NOTIFY_WEBHOOK_URL);
+  const turnstile = await verifyTurnstile(result.data.turnstileToken, ip);
+  if (!turnstile.ok) {
+    const status = turnstile.code === "TURNSTILE_NOT_CONFIGURED" ? 503 : 400;
+    json(
+      context,
+      status,
+      {
+        ok: false,
+        code: turnstile.code,
+        message: turnstile.message,
+      },
+      corsHeaders(),
+    );
+    return;
+  }
 
-  if (!storageConfigured && !notifyConfigured) {
-    json(context, 501, {
-      ok: false,
-      code: "NOT_CONFIGURED",
-      message:
-        "Kontakt-API ist bereit, aber noch nicht mit Speicher oder Versand verbunden.",
-    });
+  if (!getConnectionString()) {
+    json(
+      context,
+      503,
+      {
+        ok: false,
+        code: "STORAGE_NOT_CONFIGURED",
+        message:
+          "Der Empfangsdienst ist noch nicht vollständig konfiguriert. Bitte schreiben Sie an info@brokervision.ch.",
+      },
+      corsHeaders(),
+    );
     return;
   }
 
   const inquiry = {
     id: crypto.randomUUID(),
     receivedAt: new Date().toISOString(),
-    ...result.data,
+    name: result.data.name,
+    company: result.data.company,
+    email: result.data.email,
+    phone: result.data.phone,
+    interest: result.data.interest,
+    message: result.data.message,
+    source: result.data.source,
     status: "new",
+    mailStatus: "pending",
+    clientIpHash: hashIp(ip),
   };
 
-  // Persistence & notification hooks – activated when env vars are set in Azure.
-  // Implementation will use Azure Storage / webhook without embedding secrets in git.
+  let stored;
+  try {
+    stored = await saveInquiry(inquiry);
+  } catch (error) {
+    context.log.error("Storage save failed", error);
+    json(
+      context,
+      503,
+      {
+        ok: false,
+        code: "STORAGE_FAILED",
+        message:
+          "Ihre Anfrage konnte nicht gespeichert werden. Bitte versuchen Sie es später erneut oder schreiben Sie an info@brokervision.ch.",
+      },
+      corsHeaders(),
+    );
+    return;
+  }
+
+  if (!stored.ok) {
+    json(
+      context,
+      503,
+      {
+        ok: false,
+        code: stored.code || "STORAGE_NOT_CONFIGURED",
+        message:
+          "Der Empfangsdienst ist noch nicht vollständig konfiguriert. Bitte schreiben Sie an info@brokervision.ch.",
+      },
+      corsHeaders(),
+    );
+    return;
+  }
+
+  let mailStatus = "skipped";
+  try {
+    const mail = await sendGraphNotification(inquiry);
+    if (mail.skipped) mailStatus = "disabled";
+    else if (mail.ok) mailStatus = "sent";
+    else {
+      mailStatus = "failed";
+      context.log.warn("Graph mail failed", mail.code, mail.detail || "");
+    }
+  } catch (error) {
+    mailStatus = "failed";
+    context.log.warn("Graph mail exception", error?.message || error);
+  }
+
+  // Inquiry is considered accepted once stored; mail can be enabled later via config.
   context.log("Contact inquiry accepted", {
     id: inquiry.id,
     interest: inquiry.interest,
-    storageConfigured,
-    notifyConfigured,
+    mailStatus,
+    mailEnabled: isMailEnabled(),
   });
 
-  json(context, 200, { ok: true, id: inquiry.id });
+  json(
+    context,
+    200,
+    {
+      ok: true,
+      id: inquiry.id,
+      mailStatus,
+    },
+    corsHeaders(),
+  );
 };

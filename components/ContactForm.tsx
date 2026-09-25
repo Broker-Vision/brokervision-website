@@ -1,22 +1,24 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useId, useState, type ReactNode } from "react";
+import { FormEvent, useEffect, useId, useState, type ReactNode } from "react";
 import {
-  buildMailtoDraft,
   contactConfig,
   contactInterests,
   emptyContactForm,
+  fetchContactConfig,
   validateContactPayload,
   type ContactFieldErrors,
   type ContactPayload,
+  type ContactPublicConfig,
 } from "@/lib/contact";
+import { TurnstileWidget, resetTurnstile } from "@/components/TurnstileWidget";
 
 type SubmitState =
   | { status: "idle" }
   | { status: "submitting" }
-  | { status: "success"; mode: "api" | "mailto" }
-  | { status: "error"; message: string };
+  | { status: "success"; id?: string }
+  | { status: "error"; message: string; code?: string };
 
 const fieldClass =
   "w-full rounded-lg border border-navy-900/15 bg-paper px-3 py-2.5 outline-none ring-gold-400/40 transition focus:ring-2 disabled:opacity-60";
@@ -28,6 +30,32 @@ export function ContactForm() {
   const [fieldErrors, setFieldErrors] = useState<ContactFieldErrors>({});
   const [formError, setFormError] = useState<string | null>(null);
   const [submit, setSubmit] = useState<SubmitState>({ status: "idle" });
+  const [config, setConfig] = useState<ContactPublicConfig | null>(null);
+  const [configError, setConfigError] = useState<string | null>(null);
+  const [turnstileReady, setTurnstileReady] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchContactConfig()
+      .then((data) => {
+        if (cancelled) return;
+        setConfig(data);
+        if (!data.turnstileSiteKey || !data.turnstileRequired) {
+          setConfigError(
+            "Die Sicherheitsprüfung ist noch nicht konfiguriert. Bitte schreiben Sie an info@brokervision.ch.",
+          );
+        }
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setConfigError(
+          "Der Kontaktdienst ist vorübergehend nicht erreichbar. Bitte schreiben Sie an info@brokervision.ch.",
+        );
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   function update<K extends keyof ContactPayload>(key: K, value: ContactPayload[K]) {
     setValues((current) => ({ ...current, [key]: value }));
@@ -44,11 +72,18 @@ export function ContactForm() {
     setFormError(null);
     setFieldErrors({});
 
-    const validation = validateContactPayload(values);
+    if (configError || !config?.turnstileRequired) {
+      setFormError(
+        configError ||
+          "Der Kontaktdienst ist noch nicht vollständig konfiguriert. Bitte schreiben Sie an info@brokervision.ch.",
+      );
+      return;
+    }
+
+    const validation = validateContactPayload(values, { requireTurnstile: true });
     if (!validation.ok) {
       if (validation.form === "spam") {
-        // Silent success for bots – no data leaves the browser.
-        setSubmit({ status: "success", mode: "api" });
+        setSubmit({ status: "success" });
         return;
       }
       setFieldErrors(validation.fields);
@@ -65,7 +100,7 @@ export function ContactForm() {
         body: JSON.stringify(validation.data),
       });
 
-      let payload: { code?: string; message?: string; ok?: boolean } = {};
+      let payload: { code?: string; message?: string; ok?: boolean; id?: string } = {};
       try {
         payload = await response.json();
       } catch {
@@ -73,50 +108,59 @@ export function ContactForm() {
       }
 
       if (response.ok && payload.ok) {
-        setSubmit({ status: "success", mode: "api" });
+        setSubmit({ status: "success", id: payload.id });
         setValues(emptyContactForm());
+        resetTurnstile();
+        setTurnstileReady(false);
         return;
       }
 
-      if (response.status === 501 || payload.code === "NOT_CONFIGURED") {
-        setSubmit({ status: "success", mode: "mailto" });
+      if (response.status === 429) {
+        setSubmit({
+          status: "error",
+          code: "RATE_LIMITED",
+          message:
+            payload.message ||
+            "Zu viele Anfragen. Bitte warten Sie einen Moment und versuchen Sie es erneut.",
+        });
+        resetTurnstile();
+        update("turnstileToken", "");
         return;
       }
 
-      if (response.status === 400 && payload.message) {
+      if (response.status === 400) {
         setSubmit({ status: "idle" });
-        setFormError(payload.message);
+        if (payload.code === "TURNSTILE_FAILED" || payload.code === "TURNSTILE_MISSING") {
+          setFieldErrors({ turnstileToken: payload.message || "Sicherheitsprüfung fehlgeschlagen." });
+          resetTurnstile();
+          update("turnstileToken", "");
+        }
+        setFormError(payload.message || "Bitte prüfen Sie Ihre Angaben.");
         return;
       }
 
       setSubmit({
         status: "error",
+        code: payload.code,
         message:
           payload.message ||
-          "Die Anfrage konnte nicht übermittelt werden. Bitte versuchen Sie es erneut oder schreiben Sie uns per E-Mail.",
+          "Die Anfrage konnte nicht übermittelt werden. Bitte versuchen Sie es erneut oder schreiben Sie an info@brokervision.ch.",
       });
+      resetTurnstile();
+      update("turnstileToken", "");
     } catch {
-      // API not reachable (local static export / API not yet deployed).
-      setSubmit({ status: "success", mode: "mailto" });
+      setSubmit({
+        status: "error",
+        code: "NETWORK",
+        message:
+          "Die Verbindung zum Kontaktdienst ist fehlgeschlagen. Bitte versuchen Sie es erneut oder schreiben Sie an info@brokervision.ch.",
+      });
+      resetTurnstile();
+      update("turnstileToken", "");
     }
   }
 
   if (submit.status === "success") {
-    const mailto = buildMailtoDraft(
-      submit.mode === "mailto"
-        ? values.name
-          ? values
-          : {
-              ...emptyContactForm(),
-              name: "Ihre Angaben",
-              email: "ihre@email.ch",
-              interest: contactInterests[0],
-              message: "Bitte fügen Sie hier Ihre Nachricht ein.",
-              privacyAccepted: true,
-            }
-        : emptyContactForm(),
-    );
-
     return (
       <div
         className="rounded-2xl border border-navy-900/10 bg-white p-8 shadow-sm"
@@ -124,38 +168,16 @@ export function ContactForm() {
         aria-live="polite"
       >
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold-500">
-          {submit.mode === "api" ? "Anfrage erhalten" : "Angaben geprüft"}
+          Anfrage erhalten
         </p>
         <h2 className="font-display mt-3 text-3xl text-navy-900">Vielen Dank.</h2>
-        {submit.mode === "api" ? (
-          <p className="mt-3 leading-relaxed text-navy-800/80">
-            Wir haben Ihre Nachricht entgegengenommen und melden uns in der Regel innerhalb
-            weniger Werktage.
-          </p>
-        ) : (
-          <div className="mt-3 space-y-3 leading-relaxed text-navy-800/80">
-            <p>
-              Ihre Angaben sind gültig. Der automatische Versand und die Speicherung der
-              Anfragen werden vorbereitet und sind noch nicht produktiv aktiviert.
-            </p>
-            <p>
-              Bitte senden Sie Ihre Anfrage vorübergehend per E-Mail an{" "}
-              <a
-                className="font-medium text-navy-900 underline decoration-gold-400 underline-offset-4"
-                href={`mailto:${contactConfig.recipientEmail}`}
-              >
-                {contactConfig.recipientEmail}
-              </a>
-              .
-            </p>
-            <a
-              href={mailto}
-              className="inline-flex rounded-full bg-navy-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-navy-800"
-            >
-              E-Mail mit Ihren Angaben öffnen
-            </a>
-          </div>
-        )}
+        <p className="mt-3 leading-relaxed text-navy-800/80">
+          Wir haben Ihre Nachricht entgegengenommen und melden uns in der Regel innerhalb
+          weniger Werktage.
+        </p>
+        {submit.id ? (
+          <p className="mt-3 text-xs text-navy-800/50">Referenz: {submit.id}</p>
+        ) : null}
         <button
           type="button"
           className="mt-6 text-sm font-medium text-navy-900 underline underline-offset-4"
@@ -164,6 +186,7 @@ export function ContactForm() {
             setValues(emptyContactForm());
             setFieldErrors({});
             setFormError(null);
+            setTurnstileReady(false);
           }}
         >
           Weitere Nachricht verfassen
@@ -173,21 +196,17 @@ export function ContactForm() {
   }
 
   const busy = submit.status === "submitting";
+  const serviceBlocked = Boolean(configError);
 
   return (
     <form
       id={formId}
       onSubmit={onSubmit}
-      className="rounded-2xl border border-navy-900/10 bg-white p-6 shadow-sm sm:p-8"
+      className="relative rounded-2xl border border-navy-900/10 bg-white p-6 shadow-sm sm:p-8"
       noValidate
     >
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field
-          label="Name"
-          required
-          error={fieldErrors.name}
-          htmlFor={`${formId}-name`}
-        >
+        <Field label="Name" required error={fieldErrors.name} htmlFor={`${formId}-name`}>
           <input
             id={`${formId}-name`}
             className={`${fieldClass} ${fieldErrors.name ? fieldErrorClass : ""}`}
@@ -195,7 +214,7 @@ export function ContactForm() {
             autoComplete="name"
             value={values.name}
             onChange={(event) => update("name", event.target.value)}
-            disabled={busy}
+            disabled={busy || serviceBlocked}
             required
             aria-invalid={Boolean(fieldErrors.name)}
           />
@@ -208,16 +227,11 @@ export function ContactForm() {
             autoComplete="organization"
             value={values.company}
             onChange={(event) => update("company", event.target.value)}
-            disabled={busy}
+            disabled={busy || serviceBlocked}
             aria-invalid={Boolean(fieldErrors.company)}
           />
         </Field>
-        <Field
-          label="E-Mail"
-          required
-          error={fieldErrors.email}
-          htmlFor={`${formId}-email`}
-        >
+        <Field label="E-Mail" required error={fieldErrors.email} htmlFor={`${formId}-email`}>
           <input
             id={`${formId}-email`}
             className={`${fieldClass} ${fieldErrors.email ? fieldErrorClass : ""}`}
@@ -226,7 +240,7 @@ export function ContactForm() {
             autoComplete="email"
             value={values.email}
             onChange={(event) => update("email", event.target.value)}
-            disabled={busy}
+            disabled={busy || serviceBlocked}
             required
             aria-invalid={Boolean(fieldErrors.email)}
           />
@@ -240,7 +254,7 @@ export function ContactForm() {
             autoComplete="tel"
             value={values.phone}
             onChange={(event) => update("phone", event.target.value)}
-            disabled={busy}
+            disabled={busy || serviceBlocked}
             aria-invalid={Boolean(fieldErrors.phone)}
           />
         </Field>
@@ -259,7 +273,7 @@ export function ContactForm() {
           name="interest"
           value={values.interest}
           onChange={(event) => update("interest", event.target.value)}
-          disabled={busy}
+          disabled={busy || serviceBlocked}
           aria-invalid={Boolean(fieldErrors.interest)}
         >
           {contactInterests.map((interest) => (
@@ -283,14 +297,13 @@ export function ContactForm() {
           name="message"
           value={values.message}
           onChange={(event) => update("message", event.target.value)}
-          disabled={busy}
+          disabled={busy || serviceBlocked}
           required
           maxLength={contactConfig.maxMessageLength}
           aria-invalid={Boolean(fieldErrors.message)}
         />
       </Field>
 
-      {/* Honeypot – for bots only; visually hidden, not in tab order. */}
       <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
         <label htmlFor={`${formId}-website`}>Website</label>
         <input
@@ -310,7 +323,7 @@ export function ContactForm() {
             className="mt-1 h-4 w-4 rounded border-navy-900/25 text-navy-900 focus:ring-gold-400"
             checked={values.privacyAccepted}
             onChange={(event) => update("privacyAccepted", event.target.checked)}
-            disabled={busy}
+            disabled={busy || serviceBlocked}
             aria-invalid={Boolean(fieldErrors.privacyAccepted)}
           />
           <span>
@@ -332,6 +345,55 @@ export function ContactForm() {
         ) : null}
       </div>
 
+      <div className="mt-5">
+        <p className="mb-2 text-sm font-medium text-navy-900">Sicherheitsprüfung *</p>
+        {config?.turnstileSiteKey ? (
+          <TurnstileWidget
+            siteKey={config.turnstileSiteKey}
+            disabled={busy || serviceBlocked}
+            onToken={(token) => {
+              update("turnstileToken", token);
+              setTurnstileReady(true);
+            }}
+            onExpire={() => {
+              update("turnstileToken", "");
+              setTurnstileReady(false);
+            }}
+            onError={() => {
+              update("turnstileToken", "");
+              setTurnstileReady(false);
+              setFormError(
+                "Die Sicherheitsprüfung konnte nicht geladen werden. Bitte laden Sie die Seite neu.",
+              );
+            }}
+          />
+        ) : (
+          <p className="text-sm text-navy-800/60">Sicherheitsprüfung wird geladen…</p>
+        )}
+        {fieldErrors.turnstileToken ? (
+          <p className="mt-2 text-sm text-red-700" role="alert">
+            {fieldErrors.turnstileToken}
+          </p>
+        ) : null}
+        {!turnstileReady && config?.turnstileSiteKey ? (
+          <p className="mt-2 text-xs text-navy-800/50">
+            Bitte schliessen Sie die Sicherheitsprüfung ab, bevor Sie senden.
+          </p>
+        ) : null}
+      </div>
+
+      {configError ? (
+        <p className="mt-4 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950" role="status">
+          {configError}{" "}
+          <a
+            className="font-medium underline decoration-gold-400 underline-offset-4"
+            href={`mailto:${contactConfig.recipientEmail}`}
+          >
+            {contactConfig.recipientEmail}
+          </a>
+        </p>
+      ) : null}
+
       {formError ? (
         <p className="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">
           {formError}
@@ -346,14 +408,15 @@ export function ContactForm() {
 
       <button
         type="submit"
-        disabled={busy}
+        disabled={busy || serviceBlocked || !turnstileReady}
         className="mt-6 w-full rounded-full bg-navy-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-navy-800 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
       >
         {busy ? "Wird gesendet…" : "Nachricht senden"}
       </button>
       <p className="mt-3 text-xs text-navy-800/60">
-        Pflichtfelder sind mit * gekennzeichnet. Spam-Schutz und Speicherung der Anfragen sind
-        vorbereitet; produktive Zugangsdaten werden später hinterlegt.
+        Pflichtfelder sind mit * gekennzeichnet. Geschützt mit Cloudflare Turnstile. Anfragen
+        werden in Azure gespeichert; der E-Mail-Versand an {contactConfig.recipientEmail} erfolgt
+        über Microsoft Graph, sobald aktiviert.
       </p>
     </form>
   );
