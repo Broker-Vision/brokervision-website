@@ -87,13 +87,13 @@ export default function PlatformPage() {
               In Aktion
             </p>
             <p className="font-display mt-3 text-2xl leading-snug">
-              Vom Upload zur Ausschreibung – automatisch in der Live-Demo.
+              Echte Screenshots und Live-Demo der produktiven Plattform.
             </p>
             <Link
-              href="/#in-aktion"
+              href="/kontakt/?thema=live-demo"
               className="mt-6 inline-flex text-sm font-medium text-gold-300 underline underline-offset-4 hover:text-gold-400"
             >
-              Demo auf der Startseite ansehen
+              Live-Demo anfragen
             </Link>
           </div>
         </div>

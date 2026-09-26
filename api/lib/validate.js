@@ -1,5 +1,6 @@
 const INTERESTS = [
   "Allgemeine Anfrage",
+  "Live-Demo",
   "Plattform-Übersicht",
   "Offerten & Dokumentenanalyse",
   "Workflow-Automatisierung",

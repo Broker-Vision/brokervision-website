@@ -36,10 +36,10 @@ export default function HomePage() {
             </p>
             <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
-                href="/kontakt/"
+                href="/kontakt/?thema=live-demo"
                 className="inline-flex items-center justify-center rounded-full bg-gold-400 px-6 py-3 text-sm font-medium text-navy-950 transition hover:bg-gold-300"
               >
-                Gespräch vereinbaren
+                Live-Demo anfragen
               </Link>
               <Link
                 href="/plattform/"
@@ -55,9 +55,6 @@ export default function HomePage() {
               Broker Vision in Aktion
             </p>
             <PlatformDemo />
-            <p className="mt-3 text-center text-xs text-white/45">
-              Live-Demo ohne Login – läuft automatisch in Endlosschleife.
-            </p>
           </div>
         </div>
       </section>

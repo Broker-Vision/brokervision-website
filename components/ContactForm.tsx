@@ -57,6 +57,20 @@ export function ContactForm() {
     };
   }, []);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const thema = new URLSearchParams(window.location.search).get("thema");
+    if (thema === "live-demo") {
+      setValues((current) => ({
+        ...current,
+        interest: "Live-Demo",
+        message:
+          current.message ||
+          "Ich möchte eine Live-Demo von Broker Vision vereinbaren.",
+      }));
+    }
+  }, []);
+
   function update<K extends keyof ContactPayload>(key: K, value: ContactPayload[K]) {
     setValues((current) => ({ ...current, [key]: value }));
     setFieldErrors((current) => {

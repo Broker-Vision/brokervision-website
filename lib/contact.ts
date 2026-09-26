@@ -2,6 +2,7 @@ import { site } from "@/lib/site";
 
 export const contactInterests = [
   "Allgemeine Anfrage",
+  "Live-Demo",
   "Plattform-Übersicht",
   "Offerten & Dokumentenanalyse",
   "Workflow-Automatisierung",
