@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { DemoHostRedirect } from "@/components/DemoHostRedirect";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { site } from "@/lib/site";
@@ -56,6 +57,7 @@ export default function RootLayout({
   return (
     <html lang="de-CH">
       <body className={`${inter.variable} flex min-h-screen flex-col antialiased`}>
+        <DemoHostRedirect />
         <a
           href="#inhalt"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:text-navy-900"

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "demo.brokervision.ch" }],
+      "destination": "/demo/"
+    },
+    {
+      "source": "/explore",
+      "has": [{ "type": "host", "value": "demo.brokervision.ch" }],
+      "destination": "/demo/explore/"
+    },
+    {
+      "source": "/explore/",
+      "has": [{ "type": "host", "value": "demo.brokervision.ch" }],
+      "destination": "/demo/explore/"
+    }
+  ]
+}

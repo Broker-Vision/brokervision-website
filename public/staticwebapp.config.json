@@ -7,6 +7,16 @@
       "statusCode": 301
     },
     {
+      "route": "/explore",
+      "redirect": "/demo/explore/",
+      "statusCode": 301
+    },
+    {
+      "route": "/explore/*",
+      "redirect": "/demo/explore/",
+      "statusCode": 301
+    },
+    {
       "route": "/api/*",
       "allowedRoles": ["anonymous"]
     }
