@@ -5,7 +5,7 @@ export const site = {
   headline: "Der digitale Arbeitsplatz für Versicherungsbroker.",
   subheadline: "Weniger Administration. Mehr Beratung.",
   description:
-    "Broker Vision entwickelt digitale Lösungen für Versicherungsbroker, Finanzberater und Beratungsunternehmen in der Schweiz. Entstanden aus über 20 Jahren Erfahrung in der Versicherungsbranche und fundierter Praxis im Brokergeschäft.",
+    "Broker Vision – der digitale Arbeitsplatz für Versicherungsbroker. Weniger Administration, automatische Datenerfassung, schnellere Ausschreibungen.",
   url: "https://brokervision.ch",
   address: {
     street: "Furorastrasse 1a",
@@ -20,6 +20,7 @@ export const site = {
 
 export const navigation = [
   { href: "/", label: "Startseite" },
+  { href: "/demo/", label: "Demo", prominent: true },
   { href: "/plattform/", label: "Plattform" },
   { href: "/ueber-uns/", label: "Über uns" },
   { href: "/kontakt/", label: "Kontakt" },
@@ -29,111 +30,87 @@ export const navigation = [
 export const platformModules = [
   {
     slug: "offerten",
-    title: "Broker Vision Offerten",
-    excerpt:
-      "Offerten und Ausschreibungen strukturiert vorbereiten, prüfen und versenden – ohne Medienbrüche.",
+    title: "Offerten",
+    excerpt: "Schnellere Ausschreibungen – vorbereitet aus erkannten Daten.",
     details:
-      "Dokumente werden erfasst, Daten vorbereitet und Ausschreibungen effizient erstellt. Der Broker behält die Kontrolle, die Software übernimmt die repetitive Arbeit.",
+      "Dokumente erfassen, Daten übernehmen, Ausschreibungen versenden. Der Broker behält die Kontrolle.",
   },
   {
     slug: "crm",
-    title: "Broker Vision CRM",
-    excerpt:
-      "Beziehungen, Mandate und Kontakte im Kontext des Brokeralltags – nicht als generisches CRM.",
+    title: "CRM",
+    excerpt: "Kunden und Mandate im Brokerkontext – nicht als generisches CRM.",
     details:
-      "Kunden, Gesellschaften und Vorgänge an einem Ort. So bleibt der Überblick über Bestände und Beratungshandlungen erhalten, ohne dass Teams zwischen Werkzeugen springen müssen.",
+      "Kunden, Gesellschaften und Vorgänge an einem Ort. Überblick ohne Tool-Wechsel.",
   },
   {
     slug: "workflow",
-    title: "Broker Vision Workflow-Automatisierung",
-    excerpt:
-      "Wiederkehrende Abläufe digitalisieren und automatisieren – von der Aufgabe bis zur Freigabe.",
+    title: "Workflow",
+    excerpt: "Weniger E-Mail-Pingpong. Klare Abläufe im Team.",
     details:
-      "Fristen, Zuständigkeiten und Schritte werden nachvollziehbar geführt. Weniger E-Mail-Pingpong, mehr klar definierte Prozesse im Team.",
+      "Fristen, Zuständigkeiten und Freigaben nachvollziehbar – automatisch geführt.",
   },
   {
     slug: "ocr",
-    title: "Broker Vision OCR & Dokumentenanalyse",
-    excerpt:
-      "Policen, Offerten und Formulare automatisch auslesen und strukturieren – inkl. KI-gestützter Erkennung wo sinnvoll.",
+    title: "OCR & Analyse",
+    excerpt: "Automatische Datenerfassung aus Policen und Formularen.",
     details:
-      "Dokumente werden analysiert, relevante Daten erkannt und für Folgeprozesse aufbereitet. KI unterstützt die Dokumentenanalyse und Automatisierung – ohne leere Marketingversprechen.",
+      "Dokumente analysieren, Felder erkennen, Folgeprozesse vorbereiten – inkl. KI wo sinnvoll.",
   },
   {
     slug: "dokumente",
-    title: "Broker Vision Dokumentenmanagement",
-    excerpt:
-      "Dokumente sicher ablegen, finden und mit Vorgängen verknüpfen.",
+    title: "Dokumente",
+    excerpt: "Alles zum Mandat – findbar und verknüpft.",
     details:
-      "Statt verstreuter Ablagen und Postfächer entsteht eine geordnete Dokumentenlage rund um Mandate und Prozesse – revisionssicher und im Alltag nutzbar.",
+      "Geordnete Ablage rund um Mandate und Prozesse statt verstreuter Postfächer.",
   },
   {
     slug: "kundenportal",
     title: "Kundenportal",
-    excerpt:
-      "Geplantes Modul für den direkten, digitalen Austausch mit Endkunden.",
+    excerpt: "Geplant: digitaler Austausch mit Endkunden.",
     details:
-      "In Vorbereitung: ein Kundenportal, das Beratung und Service über die Plattform hinweg ergänzt – abgestimmt auf den Brokerprozess, nicht als isolierte App.",
+      "In Vorbereitung – abgestimmt auf den Brokerprozess, nicht als isolierte App.",
     upcoming: true,
   },
 ] as const;
 
-export const challenges = [
-  "manuellen Arbeiten",
-  "administrativen Tätigkeiten",
-  "Dokumentenflut",
-  "E-Mails",
-  "Medienbrüchen",
-  "fehlender Automatisierung",
-] as const;
-
 export const benefits = [
   {
-    title: "Administration reduzieren",
-    text: "Wiederkehrende Tätigkeiten wandern in die Software – Teams gewinnen Raum für echte Beratung.",
+    title: "Weniger Administration",
+    text: "Wiederkehrende Arbeit übernimmt die Software.",
   },
   {
     title: "Mehr Zeit für Kunden",
-    text: "Weniger Tipparbeit und Nachfasserei, mehr Gespräch und Betreuung.",
+    text: "Beratung statt Tipparbeit und Nachfasserei.",
   },
   {
-    title: "Prozesse vereinfachen",
-    text: "Klare Abläufe statt Medienbrüche zwischen Postfach, Tabellen und Insellösungen.",
+    title: "Automatische Datenerfassung",
+    text: "OCR liest Policen – Felder landen strukturiert im System.",
   },
   {
-    title: "Fehler reduzieren",
-    text: "Automatisierte Erfassung und strukturierte Formulare senken das Risiko manueller Fehler.",
+    title: "Schnellere Ausschreibungen",
+    text: "Vom Dokument zum Versand in Minuten.",
   },
   {
-    title: "Wachstum mit gleichem Personalbestand",
-    text: "Mehr Volumen bewältigen, ohne proportional mehr Administrative aufzubauen.",
+    title: "Weniger Fehler",
+    text: "Automatisierte Übernahme senkt manuelle Risiken.",
   },
   {
-    title: "Servicequalität verbessern",
-    text: "Schnellere Durchlaufzeiten und nachvollziehbare Vorgänge stärken den Kundenservice.",
+    title: "Mehr Wachstum, gleiches Team",
+    text: "Mehr Volumen ohne proportional mehr Administration.",
   },
-] as const;
-
-export const actionSteps = [
-  "Dashboard",
-  "Police hochladen",
-  "Analyse",
-  "Daten erkannt",
-  "Ausschreibung",
-  "Ergebnis",
 ] as const;
 
 export const values = [
   {
     title: "Branchenerfahrung",
-    text: "Über 20 Jahre in der Versicherungsbranche und fundierte Praxis im Brokergeschäft prägen Produkt und Prioritäten.",
+    text: "Über 20 Jahre Versicherungsbranche und Brokergeschäft.",
   },
   {
     title: "Automatisierung",
-    text: "Viele Systeme verwalten Daten. Broker Vision automatisiert Arbeit – damit Software den Alltag trägt.",
+    text: "Software arbeitet – Menschen beraten.",
   },
   {
-    title: "Plattformdenken",
-    text: "Module greifen ineinander: Offerten, CRM, Workflows, Dokumente und Analyse als ein digitaler Arbeitsplatz.",
+    title: "Plattform",
+    text: "Ein digitaler Arbeitsplatz statt Insellösungen.",
   },
 ] as const;

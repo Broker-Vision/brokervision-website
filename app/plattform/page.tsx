@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
-import { platformModules, site } from "@/lib/site";
+import { ProductDemo } from "@/components/ProductDemo";
+import { benefits, platformModules, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Plattform",
   description:
-    "Broker Vision – der digitale Arbeitsplatz für Versicherungsbroker. Eine Plattform mit Modulen für Offerten, CRM, Workflows, OCR und Dokumente.",
+    "Broker Vision – der digitale Arbeitsplatz für Versicherungsbroker. Demo, Module und Nutzen auf einen Blick.",
 };
 
 export default function PlatformPage() {
@@ -14,43 +15,75 @@ export default function PlatformPage() {
     <>
       <PageHero
         eyebrow="Plattform"
-        title="Der digitale Arbeitsplatz für Versicherungsbroker."
-        lead="Broker Vision ist eine zentrale Plattform – keine Sammlung isolierter Produkte. Module greifen ineinander und automatisieren Arbeit im Brokeralltag."
+        title={site.headline}
+        lead={site.subheadline}
       />
 
-      <section className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
-        <div className="max-w-3xl">
-          <h2 className="font-display text-3xl sm:text-4xl">Plattform statt Einzelprodukte</h2>
-          <p className="mt-5 leading-relaxed text-navy-800/80">
-            Viele bestehende Systeme verwalten Daten. Broker Vision automatisiert Arbeit:
-            Offerten vorbereiten, Dokumente analysieren, Prozesse führen und Bestände im
-            Kontext halten – in einem digitalen Arbeitsplatz.
-          </p>
-          <p className="mt-4 leading-relaxed text-navy-800/80">
-            «{site.tagline}»
-          </p>
+      <section className="bg-navy-950 text-white">
+        <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
+          <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold-400">
+                Demo
+              </p>
+              <h2 className="font-display mt-3 text-3xl sm:text-4xl">Produkt in Aktion.</h2>
+              <p className="mt-2 max-w-lg text-white/65">
+                Automatische Datenerfassung. Schnellere Ausschreibungen. Weniger Fehler.
+              </p>
+            </div>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/demo/"
+                className="inline-flex items-center justify-center rounded-full bg-gold-400 px-5 py-2.5 text-sm font-medium text-navy-950 transition hover:bg-gold-300"
+              >
+                Demo ansehen
+              </Link>
+              <Link
+                href="/demo/explore/"
+                className="inline-flex items-center justify-center rounded-full border border-white/25 px-5 py-2.5 text-sm font-medium text-white transition hover:border-white hover:bg-white/5"
+              >
+                Demo selbst erkunden
+              </Link>
+            </div>
+          </div>
+          <div className="mt-8 sm:mt-10">
+            <ProductDemo mode="autoplay" size="full" />
+          </div>
         </div>
       </section>
 
+      <section className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-20">
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold-500">Nutzen</p>
+        <h2 className="font-display mt-3 max-w-xl text-3xl sm:text-4xl">
+          Was die Plattform im Alltag bringt.
+        </h2>
+        <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {benefits.map((benefit) => (
+            <li key={benefit.title} className="border-t border-navy-900/15 pt-4">
+              <h3 className="font-display text-xl text-navy-900">{benefit.title}</h3>
+              <p className="mt-2 text-sm text-navy-800/75">{benefit.text}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
       <section className="bg-navy-50">
-        <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold-500">
-            Module
-          </p>
+        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-20">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold-500">Module</p>
           <h2 className="font-display mt-3 max-w-2xl text-3xl sm:text-4xl">
-            Bausteine einer gemeinsamen Plattform
+            Bausteine eines Arbeitsplatzes
           </h2>
-          <ol className="mt-12 space-y-6">
+          <ol className="mt-10 space-y-4">
             {platformModules.map((module, index) => (
               <li
                 key={module.slug}
                 id={module.slug}
-                className="grid gap-4 border border-navy-900/10 bg-white p-6 sm:p-8 lg:grid-cols-[6rem_1fr]"
+                className="grid gap-3 border border-navy-900/10 bg-white p-5 sm:p-6 lg:grid-cols-[5rem_1fr]"
               >
-                <p className="font-display text-3xl text-gold-500">0{index + 1}</p>
+                <p className="font-display text-2xl text-gold-500">0{index + 1}</p>
                 <div>
                   <div className="flex flex-wrap items-center gap-3">
-                    <h3 className="font-display text-2xl text-navy-900 sm:text-3xl">
+                    <h3 className="font-display text-xl text-navy-900 sm:text-2xl">
                       {module.title}
                     </h3>
                     {"upcoming" in module && module.upcoming ? (
@@ -59,7 +92,7 @@ export default function PlatformPage() {
                       </span>
                     ) : null}
                   </div>
-                  <p className="mt-3 max-w-3xl leading-relaxed text-navy-800/80">
+                  <p className="mt-2 max-w-3xl text-sm leading-relaxed text-navy-800/80 sm:text-base">
                     {module.details}
                   </p>
                 </div>
@@ -69,51 +102,28 @@ export default function PlatformPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
-        <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
+      <section className="bg-navy-950 text-white">
+        <div className="mx-auto flex max-w-6xl flex-col gap-5 px-5 py-14 sm:flex-row sm:items-center sm:justify-between sm:px-8 sm:py-16">
           <div>
-            <h2 className="font-display text-3xl sm:text-4xl">
-              Dokumentenanalyse und Automatisierung
-            </h2>
-            <p className="mt-4 leading-relaxed text-navy-800/80">
-              Wo OCR, Dokumentenanalyse und Workflow-Automatisierung greifen, setzt Broker
-              Vision gezielt auf moderne Erkennungstechnologien – inklusive KI dort, wo sie
-              den Prozess messbar entlastet. Nicht als Marketingthema, sondern als Werkzeug
-              im Brokeralltag.
+            <h2 className="font-display text-3xl">Passt Broker Vision zu Ihnen?</h2>
+            <p className="mt-2 max-w-xl text-white/70">
+              Demo ansehen – oder im Gespräch den Einsatz in Ihrem Betrieb klären.
             </p>
           </div>
-          <div className="border border-navy-900/10 bg-navy-950 p-8 text-white">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold-400">
-              In Aktion
-            </p>
-            <p className="font-display mt-3 text-2xl leading-snug">
-              Echte Screenshots und Live-Demo der produktiven Plattform.
-            </p>
+          <div className="flex flex-col gap-3 sm:flex-row">
             <Link
-              href="/kontakt/?thema=live-demo"
-              className="mt-6 inline-flex text-sm font-medium text-gold-300 underline underline-offset-4 hover:text-gold-400"
+              href="/demo/"
+              className="inline-flex rounded-full bg-gold-400 px-5 py-2.5 text-sm font-medium text-navy-950 hover:bg-gold-300"
             >
-              Live-Demo anfragen
+              Demo ansehen
+            </Link>
+            <Link
+              href="/kontakt/"
+              className="inline-flex rounded-full border border-white/25 px-5 py-2.5 text-sm font-medium text-white hover:border-white hover:bg-white/5"
+            >
+              Gespräch vereinbaren
             </Link>
           </div>
-        </div>
-      </section>
-
-      <section className="bg-navy-950 text-white">
-        <div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-16 sm:flex-row sm:items-center sm:justify-between sm:px-8 sm:py-20">
-          <div>
-            <h2 className="font-display text-3xl">Passt Broker Vision zu Ihrem Unternehmen?</h2>
-            <p className="mt-2 max-w-xl text-white/70">
-              Schildern Sie uns Ihren Kontext. Wir zeigen, welche Module zuerst den grössten
-              Nutzen bringen.
-            </p>
-          </div>
-          <Link
-            href="/kontakt/"
-            className="inline-flex rounded-full bg-gold-400 px-5 py-2.5 text-sm font-medium text-navy-950 hover:bg-gold-300"
-          >
-            Gespräch vereinbaren
-          </Link>
         </div>
       </section>
     </>
