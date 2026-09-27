@@ -9,12 +9,15 @@ type ProductDemoProps = {
   /** Hero: kompakter für First Viewport. Full: mehr Raum auf Demo-Seiten. */
   size?: "hero" | "full";
   className?: string;
+  /** Optional DOM-id; nur einmal pro Seite setzen. */
+  id?: string;
 };
 
 export function ProductDemo({
   mode = "autoplay",
   size = "full",
   className = "",
+  id,
 }: ProductDemoProps) {
   const labelId = useId();
   const [step, setStep] = useState(0);
@@ -188,7 +191,7 @@ export function ProductDemo({
   );
 
   return (
-    <div id="in-aktion" className={["w-full", className].join(" ")} aria-labelledby={labelId}>
+    <div id={id} className={["w-full", className].join(" ")} aria-labelledby={labelId}>
       <p id={labelId} className="sr-only">
         {mode === "autoplay"
           ? "Automatische Produktdemo: Vom Police-Upload bis zum Versand der Ausschreibung."

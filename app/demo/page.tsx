@@ -35,7 +35,7 @@ export default function DemoPage() {
         </div>
 
         <div className="mt-8 sm:mt-10">
-          <ProductDemo mode="autoplay" size="full" />
+          <ProductDemo mode="autoplay" size="full" id="in-aktion" />
         </div>
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

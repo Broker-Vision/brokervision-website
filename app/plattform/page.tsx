@@ -47,7 +47,7 @@ export default function PlatformPage() {
             </div>
           </div>
           <div className="mt-8 sm:mt-10">
-            <ProductDemo mode="autoplay" size="full" />
+            <ProductDemo mode="autoplay" size="full" id="in-aktion" />
           </div>
         </div>
       </section>

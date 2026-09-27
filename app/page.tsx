@@ -42,7 +42,7 @@ export default function HomePage() {
           </div>
 
           <div className="min-w-0">
-            <ProductDemo mode="autoplay" size="hero" />
+            <ProductDemo mode="autoplay" size="hero" id="in-aktion" />
           </div>
         </div>
       </section>
